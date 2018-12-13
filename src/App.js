@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { socketConnection,eventEmiters} from './socket-client/socketClient'
+import { socketConnection,eventEmiters,socketAuth} from './socket-client/socketClient'
 const socket = socketConnection();
 
 
@@ -12,6 +12,7 @@ class App extends Component {
 componentDidMount(){
 
 
+  socketAuth(socket);
   eventEmiters(socket);
 }
 

@@ -41,3 +41,27 @@ export const eventEmiters= (socket)=>{
 
 
 }
+
+export const eventListeners = (socket) =>{
+
+  return new Promise((resolve,reject)=>{
+
+     socket.on('timetable',(timetable)=>{
+
+       if(timetable){
+         resolve(timetable)
+       }else {
+         reject();
+       }
+
+
+     })
+
+
+
+  })
+
+
+
+
+}

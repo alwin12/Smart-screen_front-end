@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import FullTable from './Components/FullTable/FullTable'
 import { socketConnection,eventEmiters,eventListeners,socketAuth} from './socket-client/socketClient'
+import {activeScheduler,innactiveScheduler} from "./time-scheduler/timeScheduler"
+import {sort,getEndTimes} from './utils/utils.js'
 
 
 const socket = socketConnection();
@@ -15,7 +17,7 @@ class App extends Component {
    super();
    this.state = {
 
-     timeTable:[]
+     Timetable:[]
    }
 }
 componentDidMount(){
@@ -26,13 +28,45 @@ componentDidMount(){
 
    eventListeners(socket).then((timetables)=>{
 
-  this.setState({timeTable:timetables.timetable})
+  let timetable = timetables.timetable
 
-  console.log(this.state.timeTable[0].building);
+  timetable.map((timetable)=>{
+
+    timetable.status = {
+       active:  false,
+       previous: false,
+       next: false
+    }
+
+  })
+
+this.setState({Timetable:sort(timetable)})
+
+
+let jobs = [];
+this.state.Timetable.map((timetable,index)=>{
+   jobs.push(activeScheduler(this,timetable))
+
+})
+
+
+
+let endTimes = getEndTimes(this.state.Timetable)
+  console.log(endTimes)
+endTimes.map((endTime)=>{
+
+
+jobs.push(innactiveScheduler(this,endTime));
+
+
+})
+
+console.log(this.state.Timetable);
 
    }).catch(e=>{
-     console.log('error');
+     console.log(e);
    })
+
 
 
 }
@@ -43,7 +77,7 @@ componentDidMount(){
       <div className="App">
 
 
- <FullTable timeTable = {this.state.timeTable} />
+ <FullTable timeTable = {this.state.Timetable} />
       </div>
     );
   }

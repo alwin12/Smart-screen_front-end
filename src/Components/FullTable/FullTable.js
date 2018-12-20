@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 
  import TimeTableCard from '../TimeTableCard/TimeTableCard'
+ import  './FullTable.css'
 
 
 
@@ -21,13 +22,21 @@ render(){
 
   })
 
-  return (<div>
+   if(this.props.timeTable.length == 0)  {
+     return (<h2>loading...</h2>)
+   }else
 
-  {timeTableCards}
+     {
+    return (
 
+      <div className = 'grid'>
+
+   <div>course code</div> <div>course name</div> <div>start</div> <div>end</div>
 
 
     </div>)
+  }
+    //{timeTableCards}
 }
 
 }

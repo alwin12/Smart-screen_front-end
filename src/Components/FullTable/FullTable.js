@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
+import ReactTable from "react-table";
 
  import TimeTableCard from '../TimeTableCard/TimeTableCard'
  import  './FullTable.css'
-
+ import "react-table/react-table.css"
 
 
 
@@ -10,6 +11,34 @@ class FullTable extends Component {
 
 
 render(){
+
+  const columns=[
+
+{
+ Header: "Course Name",
+ accessor: "lecture"
+
+
+},
+{
+  Header: "Start",
+  accessor: "startTime"
+
+
+},
+{
+  Header:"End",
+  accessor: "endTime"
+
+},
+{
+  id: "status",
+  Header: "status",
+accessor: props => props.status.text,
+maxWidth:100
+}
+
+  ]
 
 
   console.log(this.props.timeTable);
@@ -29,9 +58,9 @@ render(){
      {
     return (
 
-      <div className = 'grid'>
+      <div>
 
-   <div>course code</div> <div>course name</div> <div>start</div> <div>end</div>
+   <ReactTable data = {this.props.timeTable} columns = {columns}  className='-striped highlight'/>
 
 
     </div>)

@@ -35,7 +35,8 @@ componentDidMount(){
     timetable.status = {
        active:  false,
        previous: false,
-       next: false
+       next: false,
+       text: 'innactive'
     }
 
   })

@@ -29,7 +29,7 @@
 
    }
 
- export const getEndTimes = (Timetable)=>{
+ export const getEndTimes = (Timetable=[])=>{
 
 let endTimesArray = [];
 
@@ -42,12 +42,30 @@ let endTimesArray = [];
          //console.log(Timetable[i].lecture,Timetable[j].lecture )
          endTimesArray.push(Timetable[i].endTime)
 
-     } 
+     }
 
  }
 
 endTimesArray.push(Timetable[Timetable.length-1].endTime)
 return endTimesArray;
 
+ }
 
+
+
+export const authentication = {
+
+   isAuthenticated: false,
+
+   authenticate(token,cb) {
+     this.isAuthenticated = true
+   sessionStorage.setItem('token',token)
+     setTimeout(cb,100)
+
+   },
+   signout(cb){
+     this.isAuthenticated = false
+    sessionStorage.removeItem('token')
+     setTimeout(cb,100)
+   }
  }

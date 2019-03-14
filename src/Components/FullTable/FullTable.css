@@ -1,28 +1,28 @@
+.header{
 
 
-@media screen and (min-width:40em){  /*large screen sizes*/
-.grid {
+  color:white;
 
-    display: grid;
-    grid-template-rows: 100px 100px;
-    grid-template-columns: 100px 100px 100px 100px 100px 100px;
+  background-color: #FF4500;
 
-    grid-gap:10px;
-
-
-
-}
-
-
-#status {
-  color:red
-}
+  
+  font-size:25px;
+  font-family: 'Fredoka One', cursive;
 
 
 }
 
+/*font-family: 'Luckiest Guy', cursive;
+font-family: 'Fredoka One', cursive;
+font-family: 'Vidaloka', serif;
+font-family: 'Lato', sans-serif;
+*/
+
+.active{
 
 
-.rt-resizable-header-content{
-  color:blue
+}
+.innactive{
+
+color:#00FF00;
 }

@@ -1,11 +1,13 @@
 import App from '../App.js'
 
+
+
 export const socketConnection = ()=>{
 
 
 
 const io = require('socket.io-client');
-let socket = io.connect('http://localhost:3002/');
+ let socket = io.connect('http://localhost:3002/');
 
 
 
@@ -14,39 +16,50 @@ return socket;
 
 }
 
-export const socketAuth = (socket) =>{
+export const socketAuth = (socket,building,lectureHall) =>{
+
+ let res = false;
+  return new Promise((resolve,reject)=>{
+
 
  socket.on('connect',()=>{
 
-   socket.emit('authentication',{username:'302',password:'302302'})
-
-  // socket.on('authenticated',()=>{
-  //  })
-
- })
-
-}
 
 
-export const eventEmiters= (socket)=>{
+   socket.emit('authentication',{building:building,lectureHall:lectureHall,client:'student'})
 
-  socket.emit('lecture',{
+    socket.on('unauthorized',()=>{
 
-      course: 'wwe technology',
-      startTime:'14:00',
-      endTime:'16:00'
-  })
+         reject('not authorised');
 
 
+    })
+
+    socket.on('authenticated',(auth)=>{
+      resolve();
+    })
 
 
 }
 
-export const eventListeners = (socket) =>{
+ )
+
+
+
+})
+
+
+
+}
+
+
+
+
+export const daysTimetableListener = (socket) =>{
 
   return new Promise((resolve,reject)=>{
 
-     socket.on('timetable',(timetable)=>{
+     socket.on('timetables',(timetable)=>{
 
        if(timetable){
          resolve(timetable)
@@ -57,10 +70,45 @@ export const eventListeners = (socket) =>{
 
      })
 
-
-
   })
 
+}
+
+export const advertsListener = (socket) =>{
+
+     return new Promise((resolve,reject)=>{
+
+        socket.on('adverts',(adverts)=>{
+
+   if(adverts){
+     resolve(adverts);
+   }else{
+     reject()
+   }
+
+        })
+
+     })
+}
+
+export const timeTableEmitter = (socket,timetable) =>{
+
+
+socket.emit('addTimetable',{timetable:timetable})
+
+
+}
+
+
+export const socketJwt = (socket) =>{
+
+
+
+
+
+socket.on('timetables',(timetables)=>{
+  console.log(timetables)
+})
 
 
 

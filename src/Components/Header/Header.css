@@ -1,0 +1,102 @@
+
+
+
+
+
+
+
+.main-header
+
+{
+  display:grid;
+  grid-template-columns: 1fr 200px 200px 200px 200px ;
+  height:200px;
+
+  padding: 20px;
+  background-color: rgb(1, 58, 150);
+  align-items: center;
+  text-align: center;
+
+
+
+
+}
+
+.logo {
+  grid-column: 1;
+
+
+}
+.timetable{
+
+  grid-column: 2;
+
+}
+.advert{
+  grid-column: 3;
+
+}
+.add_staff{
+  grid-column: 4;
+
+}
+.logout{
+  grid-column: 5;
+
+}
+
+
+.link{
+  color:white;
+
+  font-weight: 500;
+
+  text-decoration: none;
+  font-size: 20px;
+  padding-top:5px;
+  padding-bottom:5px;
+
+
+
+}
+
+.link:hover{
+
+  border-bottom:1px solid black;
+
+  text-decoration: none;
+
+
+  border:2px  solid orange;
+
+  background-color:orange;
+  border-radius: 20px
+
+
+
+}
+h1{
+  color:white;
+padding:0
+}
+
+.online {
+  margin: 0 auto
+}
+
+
+.viewtimetable-button {
+
+  grid-column: 2;
+    text-decoration: none;
+    border: orange;
+    color:white;
+    padding:20px;
+    border-radius: 27px;
+    background-color: orange;
+    margin-right:50px;
+    font-size: 20px;
+    margin-left: 100px
+
+
+}

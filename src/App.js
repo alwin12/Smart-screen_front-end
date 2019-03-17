@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router , Link,Route,Redirect,withRouter} from 'react-router-dom'
+import {BrowserRouter as Router , Link,Route,Redirect,withRouter,Switch} from 'react-router-dom'
 
 import './App.css';
 import FullTable from './Components/FullTable/FullTable'
@@ -256,9 +256,11 @@ student.tableDisplayed = false;
     return (
 
 
-
 <Router>
+
    <div>
+
+
 
     <Header/>
 
@@ -309,7 +311,7 @@ student.tableDisplayed = false;
     return (<Home authentication = {authentication} />)
    }
    }/>
-   <PrivateRoute path = '/staff/timetable' render = {()=>{
+   <Route path = '/staff/timetable' render = {()=>{
      return (<Timetable/>)
    }}/>
    <Route path = '/staff/upload' render = {()=>{
@@ -317,7 +319,7 @@ student.tableDisplayed = false;
         return (<Upload/>)
 
    }}/>
-   <PrivateRoute path = '/staff/addtimetable' render = {()=>{
+   <Route path = '/staff/addtimetable' render = {()=>{
 
         return (<AddTimetable />)
 
@@ -325,12 +327,11 @@ student.tableDisplayed = false;
 
 
 
+
 </div>
-
-
-
-
 </Router>
+
+
 
     );
 

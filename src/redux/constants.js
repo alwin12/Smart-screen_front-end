@@ -34,3 +34,5 @@ export const SET_AS_STAFF = 'SET_AS_STAFF'
 export const SET_AS_STUDENT = 'SET_AS_STUDENT'
 
 export const LOGOUT = 'LOGOUT'
+
+export const SET_PREVIEW_IMAGE = 'SET_PREVIEW_IMAGE'

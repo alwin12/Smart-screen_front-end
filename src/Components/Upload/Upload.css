@@ -1,3 +1,23 @@
 \input[type = file]{
   visibility: hidden
 }
+
+
+.select:hover{
+
+cursor: pointer;
+color:red;
+
+
+}
+
+.upload:hover{
+  cursor:pointer;
+
+  color:red;
+
+}
+
+.select, .upload  {
+  transition: 0.3s;
+}

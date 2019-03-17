@@ -11,13 +11,17 @@ import requireAuth from '../../utils/requireAuth'
 import {setImageField,uploadAdvert,setAdverts} from '../../redux/actions.js'
 import './Upload.css'
 
+import {Container,Icons,Images,Img} from './style.js'
+
 
 
 const mapStateToProps = (state) =>{
 
 return {
 
-   adverts:state.socketIO.adverts
+   adverts:state.socketIO.adverts,
+   image:state.inputFields.image,
+   previewImage:state.inputFields.previewImage
 }
 
 }
@@ -44,12 +48,7 @@ const mapDispatchToProps = (dispatch)=>{
 class Adverts extends Component {
 
 
-state = {
-  uploading:false,
-  image: {},
-  imagesArray: []
 
-}
 componentDidMount(){
 
 
@@ -94,44 +93,45 @@ onClick = () =>{
 
 
 
-
-
-
-
 }
 
   render(){
 
-   const images = this.props.adverts.map((image)=>{return (<img src ={image.secure_url} height='300' width ='500'/> )})
+
+   const images = this.props.adverts.map((image)=>{return (<img src ={image.secure_url} height='300' width ='350'/> )})
     return(
 
-      <div>
+      <Container>
 
-      <div  className  = 'button'>
-
-  <label htmlFor ='single'>
-
-    <FontAwesomeIcon icon = {faImage} color='black' size='5x' />
+       <Icons >
+      <label htmlFor ='single'>
+    <FontAwesomeIcon icon = {faImage} color='black' size='5x' className='select' />
     </label>
-   <input type ='file' id ='single' onChange = {this.props.setImageField}/>
-  <FontAwesomeIcon icon = {faUpload} onClick = {()=>{
+
+   <input type ='file' id ='single' onChange = {(e)=>{this.props.setImageField(e)}}/>
 
 
+
+  <FontAwesomeIcon icon = {faUpload} className='upload' onClick = {()=>{
       this.props.uploadAdvert();
-
-
   }
 
+} color='black' size='3x' />
+</Icons>
+
+
+
+<div style={{gridArea:"previewImage",margin:"20px"}}><Img src={this.props.previewImage} height='400' width='1000' /></div>
 
 
 
 
-} color='black' size='2x' />
-    </div>
 
- <div>{images}</div>
 
-      </div>
+
+ <Images style={{gridArea:'images'}}>{images}</Images>
+
+      </Container>
 
     )
   }

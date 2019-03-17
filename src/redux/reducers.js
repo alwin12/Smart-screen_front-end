@@ -2,7 +2,7 @@ import {SET_TIMETABLE,SET_ADVERTS,SET_SOCKET,
   RECIEVE_TIMETABLE_PENDING,RECIEVE_TIMETABLE_SUCCESS,RECIEVE_TIMETABLE_FAILED,MODIFY_TIMETABLE,
 RECIEVE_ADVERTS_FAILED,RECIEVE_ADVERTS_PENDING,RECIEVE_ADVERTS_SUCCESS,SET_EMAIL_FIELD,SET_PASSWORD_FIELD,
 LOGIN_PENDING,LOGIN_SUCCESS,LOGIN_FAILED,UPLOAD_PENDING,UPLOAD_SUCCESS,UPLOAD_FAILED,SET_IMAGE_FIELD,
-EMAIL_FIELD_ERROR,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT} from './constants.js'
+EMAIL_FIELD_ERROR,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,SET_PREVIEW_IMAGE} from './constants.js'
 
 import {sort} from '../utils/utils.js'
 import {modifyTimetable} from '../utils/modifyTimetable.js'
@@ -35,7 +35,8 @@ const initialInputFieldState = {
    emailField:'',
    passwordField:'',
    image:{},
-   emailError:false
+   emailError:false,
+   previewImage:''
 
 }
 
@@ -213,7 +214,14 @@ return {...state,passwordField:action.payload}
 
 case SET_IMAGE_FIELD:
 
+
+
  return {...state,image:action.payload}
+
+ case SET_PREVIEW_IMAGE:
+
+console.log('prviewq image',action.payload)
+ return {...state,previewImage:action.payload}
 
 case EMAIL_FIELD_ERROR:
 

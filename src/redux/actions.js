@@ -3,7 +3,7 @@ import {SET_TIMETABLE,SET_ADVERTS,SET_SOCKET,
 RECIEVE_ADVERTS_FAILED,RECIEVE_ADVERTS_PENDING,RECIEVE_ADVERTS_SUCCESS,
 SET_EMAIL_FIELD,SET_PASSWORD_FIELD,LOGIN_PENDING,LOGIN_SUCCESS,LOGIN_FAILED,
 UPLOAD_PENDING,UPLOAD_SUCCESS,UPLOAD_FAILED,SET_IMAGE_FIELD,EMAIL_FIELD_ERROR,VALID_EMAIL,
-VIEW_TIMETABLE,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT} from './constants.js'
+VIEW_TIMETABLE,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,SET_PREVIEW_IMAGE} from './constants.js'
 
 import axios from 'axios'
 import * as EmailValidator from 'email-validator';
@@ -29,7 +29,29 @@ else {
 
 }
 export const setPasswordField = (text)=>({type:SET_PASSWORD_FIELD,payload:text})
-export const setImageField = (image)=>({type:SET_IMAGE_FIELD,payload:image})
+
+export const setImageField = (image)=>(dispatch)=>{
+
+   let reader = new FileReader();
+
+
+     reader.onload = ()=>{
+
+
+       dispatch({type:SET_PREVIEW_IMAGE,payload:reader.result})
+     }
+
+     reader.readAsDataURL(image)
+
+  dispatch({type:SET_IMAGE_FIELD,payload:image})
+
+  
+
+
+}
+
+
+
 export const setDisplayTimetable= ()=>({type:DISPLAY_TIMETABLE})
 export const hideTimetable = ()=>({type:HIDE_TIMETABLE})
 
@@ -76,7 +98,7 @@ export const setTimetable = (callback) =>(dispatch,getState)=>{
 
 
        dispatch({type:RECIEVE_TIMETABLE_SUCCESS,payload:data.timetable})
-     callback();
+          callback();
 
 
     },(err)=>{

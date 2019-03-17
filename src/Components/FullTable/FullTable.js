@@ -38,7 +38,8 @@ class FullTable extends Component {
    }
 
  componentDidMount() {
-   this.props.disableDisplayTableButton();
+
+  // this.props.disableDisplayTableButton();
 
    console.log('timetable',this.props.timetable);
  }

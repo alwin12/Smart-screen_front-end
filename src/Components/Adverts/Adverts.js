@@ -14,20 +14,15 @@ const mapStateToProps = (state)=>{
 
 }
 
-
 class Adverts extends Component {
 
   componentDidMount(){
 
 this.props.enableDisplayTableButton();
 
-
-
-  }
-
+       }
 
   render() {
-
 
 const adverts = this.props.adverts.map((advert)=>{
 

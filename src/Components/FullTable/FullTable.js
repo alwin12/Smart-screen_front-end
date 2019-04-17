@@ -85,8 +85,6 @@ const columns = [
 
         maxWidth:200,
 
-
-
     },
 
     {
@@ -109,37 +107,21 @@ const columns = [
     //className: props=> props.status.active? 'active':'innactive',
     Cell: props=> props.value == "active"? <Status active >{props.value}</Status>: <Status>{props.value}</Status>
 
-
-
     },
-
-
-
-
 
   ]
 }
 
 ]
 
-
-
-
-
-
    if(this.props.timetable.length==0)  {
      return (<h2>loading...</h2>)
    }
-
-
 
     else if(!this.props.timetable[0].status)  {
 
        return (<h2>loading 2...</h2>)
      }
-
-
-
 
    else
 
@@ -150,7 +132,6 @@ const columns = [
 
    <ReactTable data = {this.props.timetable} columns = {columns}
    className='-striped highlight' showPagination={false} showPageSizeOption = {false} defaultPageSize = {this.props.timetable.length} />
-
 
     </div>)
   }

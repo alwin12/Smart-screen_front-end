@@ -72,11 +72,77 @@ align-content:space-between;
 
 
 
-export const Img = styled.img`
+export const Img= styled.img`
 
  src: ${props=> props.src};
- 
+ opacity:1;
 
+
+ height:auto;
+ transition: .5s ease;
+ backface-visibility:hidden;
+
+
+
+
+
+`
+
+
+
+export const Middle = styled.div`
+
+
+transition: .5s ease;
+opacity:0;
+position:absolute;
+top:50%;
+left:50%;
+transform: translate(-50%, -50%);
+-ms-transform: translate(-50%, -50%);
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+align-items:center;
+
+
+`
+
+export const Middle2 = styled(Middle)`
+
+top:10%;
+left:90%;
+
+
+`
+
+export const ImageWrapper = styled.div`
+
+
+position: relative;
+
+:hover ${Middle}{
+  opacity:1;
+}
+
+:hover ${Img} {
+opacity:0.3;
+
+
+}
+
+
+
+
+`
+export const Button = styled.button`
+
+
+padding:10px;
+background-color:orange;
+border-radius:10px;
+color:white;
 
 
 

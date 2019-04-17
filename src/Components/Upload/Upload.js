@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import {link} from 'react-router-dom'
 
 import requireAuth from '../../utils/requireAuth'
@@ -11,7 +12,7 @@ import requireAuth from '../../utils/requireAuth'
 import {setImageField,uploadAdvert,setAdverts} from '../../redux/actions.js'
 import './Upload.css'
 
-import {Container,Icons,Images,Img} from './style.js'
+import {Container,Icons,Images,Img,ImageWrapper,Middle,Button,Middle2} from './style.js'
 
 
 
@@ -98,7 +99,27 @@ onClick = () =>{
   render(){
 
 
-   const images = this.props.adverts.map((image)=>{return (<img src ={image.secure_url} height='300' width ='350'/> )})
+   const images = this.props.adverts.map((image)=>{return (
+
+     <ImageWrapper>
+     <Img src ={image.secure_url} height='300' width ='350'/>
+     <Middle>
+
+
+       <Button>view Image</Button>
+
+
+
+     </Middle>
+     <Middle2>
+     <FontAwesomeIcon icon = {faTrash} color='red' size='2x' className='select'  />
+     </Middle2>
+     </ImageWrapper>
+
+
+
+
+   )})
     return(
 
       <Container>
@@ -121,7 +142,7 @@ onClick = () =>{
 
 
 
-<div style={{gridArea:"previewImage",margin:"20px"}}><Img src={this.props.previewImage} height='400' width='1000' /></div>
+<div style={{gridArea:"previewImage",margin:"20px"}}><img src={this.props.previewImage} height='400' width='1000' /></div>
 
 
 

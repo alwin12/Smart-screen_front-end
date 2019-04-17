@@ -3,6 +3,10 @@
 import styled from 'styled-components'
 
 
+
+let currentColor = '#B22222';
+let black = 'black'
+
 export const HeaderWithIcon = styled.div`
 
 display:flex;
@@ -18,24 +22,23 @@ text-align:center;
 
 
 
-
 export const Status = styled.div`
 
 
   color: ${props=>props.active? '#00FF00':"#edd9c0"};
  font-family:fantazy;
  font-size:23px;
-font-family: 'Fredoka One', cursive;
+font-family: 'Montserrat', cursive;
 
 `
 
 export const Coursename = styled.div`
 
-color: ${props=>props.active? '#00FF00':"#B22222"};
+color: ${props=>props.active? '#00FF00':black};
 font-weight:200;
 font-size:30px;
 height:40px;
-font-family: 'Fredoka One', cursive;
+font-family: 'Montserrat', cursive;
 
 
 
@@ -48,7 +51,7 @@ color: ${props=>props.active? '#00FF00':"#B22222"};
 font-family:iceland;
 font-size:25px;
 font-weight:400;
-font-family: 'Fredoka One', cursive;
+font-family: 'Montserrat', cursive;
 text-align:center;
 
 
@@ -58,7 +61,7 @@ export const Start = styled(End)`
 color: ${props=>props.active? '#00FF00':"#B22222"};
 border-radius:0px;
 height:50px;
-font-family: 'Fredoka One', cursive;
+font-family: 'Montserrat', cursive;
 
 `
 export const Lecturer = styled.div`
@@ -69,7 +72,7 @@ export const Lecturer = styled.div`
   font-family:italics;
   text-align:center;
 
-font-family: 'Fredoka One', cursive;
+font-family: 'Montserrat', cursive;
 
 
 

@@ -3,7 +3,7 @@ import {SET_TIMETABLE,SET_ADVERTS,SET_SOCKET,
 RECIEVE_ADVERTS_FAILED,RECIEVE_ADVERTS_PENDING,RECIEVE_ADVERTS_SUCCESS,
 SET_EMAIL_FIELD,SET_PASSWORD_FIELD,LOGIN_PENDING,LOGIN_SUCCESS,LOGIN_FAILED,
 UPLOAD_PENDING,UPLOAD_SUCCESS,UPLOAD_FAILED,SET_IMAGE_FIELD,EMAIL_FIELD_ERROR,VALID_EMAIL,
-VIEW_TIMETABLE,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,SET_PREVIEW_IMAGE} from './constants.js'
+VIEW_TIMETABLE,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,SET_PREVIEW_IMAGE,REMOVE_PREVIEW_IMAGE} from './constants.js'
 
 import axios from 'axios'
 import * as EmailValidator from 'email-validator';
@@ -45,7 +45,7 @@ export const setImageField = (image)=>(dispatch)=>{
 
   dispatch({type:SET_IMAGE_FIELD,payload:image})
 
-  
+
 
 
 }
@@ -161,6 +161,7 @@ export const uploadAdvert = () => (dispatch,getState) => {
   console.log('upload data',data)
 
     dispatch({type:UPLOAD_SUCCESS})
+    dispatch({type:REMOVE_PREVIEW_IMAGE})
 
 
 

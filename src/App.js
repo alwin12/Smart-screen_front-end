@@ -16,6 +16,7 @@ import Signin from './Components/Signin/Signin.js'
 import Timetable from './Components/Timetable/Timetable.js'
 import AddTimetable from './Components/AddTimetable/AddTimetable.js'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
+import TimetableQuickView from './Components/TimetableQuickView/TimetableQuickView'
 import {connect} from 'react-redux'
 
 
@@ -262,7 +263,7 @@ student.tableDisplayed = false;
 
 
 
-    <Header/>
+  
 
 
     <Route exact path = '/' render={()=>{
@@ -324,6 +325,14 @@ student.tableDisplayed = false;
         return (<AddTimetable />)
 
    }}/>
+
+   <Route path = '/student/quickview' render = {()=>{
+
+        return (<TimetableQuickView />)
+
+   }}/>
+
+
 
 
 

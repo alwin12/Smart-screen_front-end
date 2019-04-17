@@ -56,7 +56,7 @@ console.log( pathname==='/student/adverts')
         <Toolbar>
 
           <Typography variant="h6" color="inherit" className={classes.grow}>
-          <div className = 'logo'><img src='https://federation.edu.au/__data/assets/image/0004/344533/FedUni_logo_reverse.png '/></div>
+          <div className = 'logo'><img src='https://federation.edu.au/__data/assets/image/0004/344533/FedUni_logo_reverse.png' /></div>
 
 
           </Typography>
@@ -93,3 +93,4 @@ console.log( pathname==='/student/adverts')
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(withStyles(styles)(HeaderStudent)))
+//https://federation.edu.au/__data/assets/image/0004/344533/FedUni_logo_reverse.png

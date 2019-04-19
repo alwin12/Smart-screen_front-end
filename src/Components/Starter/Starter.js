@@ -2,8 +2,25 @@ import React,{Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 import {socketAuth} from '../../socket-client/socketClient';
+import {connect} from 'react-redux'
+
+import {setRoomField,setPinField,configAuth} from '../../redux/configActions.js'
+
+import {Container} from '../../Style.js'
+
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 
+const styles = theme => ({
+  margin: {
+    margin: '40px',
+  },
+});
 
 
 class Starter extends Component {
@@ -71,42 +88,50 @@ render(){
 
   return(
 
-    <div>
+    <Container>
 
+    <div className = {this.props.classes.margin}>
+    <Grid container spacing={8} alignItems="flex-end">
+      <Grid item>
 
-  <button onClick = {()=>{
+      </Grid>
 
-  this.setState({student:true})
+      <Grid item>
+        <TextField  type='text'  id="input-with-icon-grid" label="room"  onChange = {this.props.setRoomField}/>
+      </Grid>
 
+    </Grid>
 
+    <div className={this.props.classes.margin}>
+   <Grid container spacing={8} alignItems="flex-end">
+   <Grid item>
 
+   </Grid>
+   <Grid item>
+     <TextField  type='password'  id="input-with-icon-grid" label="pin" onChange = {this.props.setPinField} />
+   </Grid>
 
-
-  }}>student</button>
-
-  <button onClick = {()=>{
-
-     this.props.onStaffClick();
-    this.setState({staffPortal:true})
-
-  }}>staff</button>
-
-{this.state.student && <div>
-
-    <label for="building" class="building">Building</label>
-    <input onChange = {this.onBuildingChange} id="building" type="text" />
-
-    <label for="Room" class="Room">Room</label>
-    <input onChange= {this.onlectureHallChange} id="Room" type="text" />
-    <button onClick = {this.onGoClick}> Go </button>
+   </Grid>
+   </div>
 
 
 
+</div>
+
+<Button  style={{alignSelf:'center',margin:'4px'}} onClick = {()=>{
+  
+this.props.configAuth()
+
+}}
+variant="contained" color="primary" className={this.props.classes.button} >
+   Go
+ </Button>
 
 
-  </div>}
 
-    </div>
+  </Container>
+
+
 
 
 
@@ -117,6 +142,25 @@ render(){
 
 
 }
+// <label for="building" class="building">Building</label>
+// <input onChange = {this.onBuildingChange} id="building" type="text" />
+//
+// <label for="Room" class="Room">Room</label>
+// <input onChange= {this.onlectureHallChange} id="Room" type="text" />
+// <button onClick = {this.onGoClick}> Go </button>
+const mapStateToProps = (state)=>{
+  return{
 
+  }
+}
+const mapDispatchToProps = (dispatch)=>{
+  return {
 
-export default Starter
+    setRoomField: (e) => dispatch(setRoomField(e.target.value)),
+    setPinField:(e)=> dispatch(setPinField(e.target.value)),
+    configAuth:()=> dispatch(configAuth())
+
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Starter))

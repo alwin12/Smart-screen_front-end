@@ -13,6 +13,7 @@ import Home from './Components/Home/Home.js'
 import Online from './Components/Online/Online.js'
 import Login from './Components/Login/Login.js'
 import Signin from './Components/Signin/Signin.js'
+import ConfigPage from './Components/ConfigPage/ConfigPage'
 import Timetable from './Components/Timetable/Timetable.js'
 import AddTimetable from './Components/AddTimetable/AddTimetable.js'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
@@ -103,9 +104,6 @@ componentDidMount(){
 
 
 
-
-
-
      this.props.setSocket(socket);
        this.props.setAdverts();
      this.props.setTimetable(()=>{
@@ -146,77 +144,6 @@ let endTimes = getEndTimes(this.props.timetable);
 
 }
 
-// onStudentClick= () =>{
-//
-//
-//
-//
-//
-//
-//
-//   student.student = true;
-//    let timetable = timetables.timetable
-//
-//    timetable.map((timetable)=>{
-//
-//      timetable.status = {
-//         active:  false,
-//         previous: false,
-//         next: false,
-//
-//      }
-//
-//    })
-//
-//
-//
-//
-//     student.Timetable= sort(timetable);
-//  console.log(this.state.student)
-//
-//     this.setState({student:student})
-//
-//
-//
-//
-//   let jobs = [];
-//   this.state.Timetable.map((timetable,index)=>{
-//     jobs.push(activeScheduler(this,timetable))
-//
-//   })
-//
-//   let endTimes = getEndTimes(this.state.student.Timetable)
-//    console.log(endTimes)
-//   endTimes.map((endTime)=>{
-//
-//
-//   jobs.push(innactiveScheduler(this,endTime));
-//
-//
-//   })
-//
-//
-//
-//
-//
-//  //    advertsListener(socket).then((adverts)=>{
-//  //
-//  //
-//  //
-//  //     console.log('adverts',adverts.adverts.resources)
-//  //
-//  //       student.adverts = adverts.adverts.resources;
-//  //       student.student = true;
-//  //       student.tableDisplayed = false;
-//  //
-//  //   this.setState({student:student})
-//  //     console.log(this.state.student  )
-//  // sessionStorage.setItem('student',JSON.stringify(this.state.student));
-//  //
-//  //   })
-//
-//
-// }
 
 
  setStaff = ()=>{
@@ -263,7 +190,7 @@ student.tableDisplayed = false;
 
 
 
-  
+
 
 
     <Route exact path = '/' render={()=>{

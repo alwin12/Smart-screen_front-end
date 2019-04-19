@@ -2,7 +2,9 @@ import {SET_TIMETABLE,SET_ADVERTS,SET_SOCKET,
   RECIEVE_TIMETABLE_PENDING,RECIEVE_TIMETABLE_SUCCESS,RECIEVE_TIMETABLE_FAILED,MODIFY_TIMETABLE,
 RECIEVE_ADVERTS_FAILED,RECIEVE_ADVERTS_PENDING,RECIEVE_ADVERTS_SUCCESS,SET_EMAIL_FIELD,SET_PASSWORD_FIELD,
 LOGIN_PENDING,LOGIN_SUCCESS,LOGIN_FAILED,UPLOAD_PENDING,UPLOAD_SUCCESS,UPLOAD_FAILED,SET_IMAGE_FIELD,
-EMAIL_FIELD_ERROR,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,SET_PREVIEW_IMAGE,REMOVE_PREVIEW_IMAGE} from './constants.js'
+EMAIL_FIELD_ERROR,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,SET_PREVIEW_IMAGE,
+REMOVE_PREVIEW_IMAGE,SET_PIN_FIELD,SET_ROOM_FIELD,
+CONFIG_AUTH_SUCCESS,CONFIG_AUTH_FAILED,CONFIG_AUTH_PENDING} from './constants.js'
 
 import {sort} from '../utils/utils.js'
 import {modifyTimetable} from '../utils/modifyTimetable.js'
@@ -18,6 +20,12 @@ const initialAppState = {
 
 }
 
+const initialConfigState = {
+
+  roomField: '',
+  pinField: ''
+
+}
 
 const initialsocketIOState = {
   socket:{},
@@ -231,6 +239,14 @@ case EMAIL_FIELD_ERROR:
 
 return {...state,emailError:true}
 
+case SET_ROOM_FIELD:
+
+return {...state,roomField:action.payload}
+
+case SET_PIN_FIELD:
+
+return {...state,pinField:action.payload}
+
     default: return state
   }
 
@@ -286,5 +302,34 @@ export const uploadAPI = (state=initialuploadAPIState,action={})=>{
 default: return state
 
   }
+
+}
+
+export const configAuth = (state={configToken:''},action = {})=>{
+
+  switch(action.type){
+
+
+case  CONFIG_AUTH_PENDING:
+
+  return {...state}
+
+case CONFIG_AUTH_SUCCESS:
+
+return {...state,configToken:action.payload}
+
+
+case CONFIG_AUTH_FAILED:
+
+return {...state}
+
+
+default: return {...state}
+
+
+  }
+
+
+
 
 }

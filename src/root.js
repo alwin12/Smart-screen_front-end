@@ -17,7 +17,8 @@ export default ({children,initialState={}})=>{
 
 
   const store = createStore(rootReducer,{
-    loginAPI:{token:localStorage.getItem('token')},
+    loginAPI:{token:localStorage.getItem('token')||''},
+    configAuth:{configToken:localStorage.getItem('token')||''},
     ...initialState
 
 

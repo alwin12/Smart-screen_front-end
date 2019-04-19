@@ -9,7 +9,7 @@ export const setRoomField = (text)=>({type:SET_ROOM_FIELD,payload:text})
 
 export const setPinField = (text)=>({type:SET_PIN_FIELD,payload:text})
 
-export const configAuth = () => (dispatch,getState)=>{
+export const configAuth = (callback) => (dispatch,getState)=>{
 dispatch({type:CONFIG_AUTH_PENDING})
 
   axios.post('http://localhost:3002/config',{
@@ -18,9 +18,11 @@ dispatch({type:CONFIG_AUTH_PENDING})
    pin:getState().inputFields.pinField
 
 
- }).then((token)=>{
-   //dispatch({type:CONFIG_AUTH_SUCCESS})
-   console.log(token)
+ }).then((resp)=>{
+   localStorage.setItem('configToken',resp.data.token)
+   dispatch({type:CONFIG_AUTH_SUCCESS,payload:resp.data.token})
+    callback();
+   console.log(resp)
 
  }).catch(e=>{
    dispatch({type:CONFIG_AUTH_FAILED})

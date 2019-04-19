@@ -104,42 +104,31 @@ componentDidMount(){
 
 
 
-     this.props.setSocket(socket);
-       this.props.setAdverts();
-     this.props.setTimetable(()=>{
-
-if(this.props.timetable.length<1){
-  return
-
-}
-   this.props.timetable.map((timetable)=>{
-
-console.log(this.props.timetable)
-     this.props.activeScheduler(timetable)
-
-   })
-
-
-
-
-let endTimes = getEndTimes(this.props.timetable);
-
- endTimes.map((endTime)=>{
-   this.props.innactiveScheduler(endTime);
- })
-
-     });
-
-
-
-
-
-
-
-
-
-
-
+//      this.props.setSocket(socket);
+//        this.props.setAdverts();
+//      this.props.setTimetable(()=>{
+//
+//  if(this.props.timetable.length<1){
+//   return
+//
+// }
+//    this.props.timetable.map((timetable)=>{
+//
+//    console.log(this.props.timetable)
+//      this.props.activeScheduler(timetable)
+//
+//    })
+//
+//
+//
+//
+// let endTimes = getEndTimes(this.props.timetable);
+//
+//  endTimes.map((endTime)=>{
+//    this.props.innactiveScheduler(endTime);
+//  })
+//
+//      });
 
 
 }

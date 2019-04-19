@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect,withRouter} from 'react-router-dom';
 import axios from 'axios';
 import {socketAuth} from '../../socket-client/socketClient';
 import {connect} from 'react-redux'
@@ -119,8 +119,12 @@ render(){
 </div>
 
 <Button  style={{alignSelf:'center',margin:'4px'}} onClick = {()=>{
-  
-this.props.configAuth()
+
+this.props.configAuth(()=>{
+
+  this.props.history.push('/student/timetable')
+})
+
 
 }}
 variant="contained" color="primary" className={this.props.classes.button} >
@@ -158,9 +162,9 @@ const mapDispatchToProps = (dispatch)=>{
 
     setRoomField: (e) => dispatch(setRoomField(e.target.value)),
     setPinField:(e)=> dispatch(setPinField(e.target.value)),
-    configAuth:()=> dispatch(configAuth())
+    configAuth:(callback)=> dispatch(configAuth(callback))
 
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Starter))
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Starter)))

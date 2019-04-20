@@ -24,7 +24,7 @@ import './fulltable.css'
 
 import io from 'socket.io-client'
 
- let socket = io.connect('http://localhost:3002/');
+let socket = io.connect('http://localhost:3002/',{query:{token:localStorage.getItem('configToken')}});
 
 const mapDispatchToProps = (dispatch)=>{
 
@@ -43,6 +43,7 @@ const mapStateToProps = (state)=>{
   return {
 
     timetable:state.socketIO.timetable,
+    configToken:state.configAuth.configToken
 
   }
 }
@@ -57,34 +58,40 @@ class FullTable extends Component {
    }
 
  componentDidMount() {
-   let socket = io.connect('http://localhost:3002/');
-
-        this.props.setSocket(socket);
-          this.props.setAdverts();
-        this.props.setTimetable(()=>{
-
-    if(this.props.timetable.length<1){
-      console.log('lemngth')
-     return
-
-   }
-      this.props.timetable.map((timetable)=>{
-
-      console.log(this.props.timetable)
-        this.props.activeScheduler(timetable)
-
-      })
 
 
 
 
-   let endTimes = getEndTimes(this.props.timetable);
+      this.props.setSocket(socket);
+        this.props.setAdverts();
+      this.props.setTimetable(()=>{
 
-    endTimes.map((endTime)=>{
-      this.props.innactiveScheduler(endTime);
+  if(this.props.timetable.length<1){
+    console.log('length')
+   return
+
+ }
+    this.props.timetable.map((timetable)=>{
+
+    console.log(this.props.timetable)
+      this.props.activeScheduler(timetable)
+
     })
 
-        });
+ let endTimes = getEndTimes(this.props.timetable);
+
+  endTimes.map((endTime)=>{
+    this.props.innactiveScheduler(endTime);
+  })
+
+      });
+
+
+
+
+
+
+
 
 
 

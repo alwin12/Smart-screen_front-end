@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import ReactTable from "react-table";
 import {connect} from 'react-redux'
 import styled from 'styled-components'
+import {withRouter} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUniversity } from '@fortawesome/free-solid-svg-icons'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
@@ -24,7 +25,7 @@ import './fulltable.css'
 
 import io from 'socket.io-client'
 
-let socket = io.connect('http://localhost:3002/',{query:{token:localStorage.getItem('configToken')}});
+
 
 const mapDispatchToProps = (dispatch)=>{
 
@@ -54,15 +55,17 @@ class FullTable extends Component {
 
    state = {
      name: 'alwin',
-     timetable:this.props.timetable
+
    }
 
+
+
  componentDidMount() {
+let socket = io.connect('http://localhost:3002/',{query:{token:localStorage.getItem('configToken')}});
+
+   this.props.setSocket(socket);
 
 
-
-
-      this.props.setSocket(socket);
         this.props.setAdverts();
       this.props.setTimetable(()=>{
 
@@ -85,10 +88,6 @@ class FullTable extends Component {
   })
 
       });
-
-
-
-
 
 
 
@@ -195,4 +194,4 @@ const columns = [
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(FullTable)
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(FullTable))

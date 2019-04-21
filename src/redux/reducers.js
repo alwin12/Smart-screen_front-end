@@ -119,7 +119,9 @@ let modifiedTimetable =   action.payload.map((timetable)=>{
 return  ({...timetable,status:{
  active:false,
  previous:false,
- next:false}})
+ next:false
+
+}})
 
 })
 
@@ -176,13 +178,36 @@ let timetable = state.timetable.map((timetable)=>{
 
 
      if(timetable._id==action.payload._id){
-     return {...timetable,status:{active:true,innactive:false}}
+     return {...timetable,status:{active:true,innactive:false,next:false}}
 
 }
 return timetable
 
 
 })
+
+
+return {...state,timetable:timetable}
+
+case "SET_TO_NEXT":
+
+ let index = undefined;
+
+ timetable = state.timetable.map((i,timetable)=>{
+
+
+     if(timetable._id==action.payload._id){
+
+
+     //return {...timetable,status:{active:false,innactive:false,next:false}}
+     index = i+1
+
+}
+return timetable
+
+})
+
+timetable[index].status.next = true;
 
 return {...state,timetable:timetable}
 

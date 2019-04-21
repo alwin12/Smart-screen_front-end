@@ -122,7 +122,9 @@ render(){
 
 this.props.configAuth(()=>{
 
+//this.props.setSocket(socket)
   this.props.history.push('/student/timetable')
+
 })
 
 
@@ -162,7 +164,8 @@ const mapDispatchToProps = (dispatch)=>{
 
     setRoomField: (e) => dispatch(setRoomField(e.target.value)),
     setPinField:(e)=> dispatch(setPinField(e.target.value)),
-    configAuth:(callback)=> dispatch(configAuth(callback))
+    configAuth:(callback)=> dispatch(configAuth(callback)),
+
 
   }
 }

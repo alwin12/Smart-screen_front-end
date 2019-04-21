@@ -23,6 +23,7 @@ export const activeScheduler = (timetable)=>(dispatch) => {
      dispatch({type:"SET_ALL_INNACTIVE"});
 
      dispatch({type:"SET_TO_ACTIVE",payload:timetable})
+     dispatch({type:"SET_TO_NEXT",payload:timetable})
 
 
  },  ()=> {

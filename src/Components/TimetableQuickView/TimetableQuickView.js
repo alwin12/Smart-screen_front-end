@@ -2,10 +2,13 @@ import React,{Component} from 'react'
 import background from './background.jpeg'
 import {connect} from 'react-redux'
 import "./TimetableQuickView.css"
+import {withRouter} from 'react-router-dom'
 import spacer from './spacer.jpeg'
 import requireConfigAuth from '../../HOCs/requireConfigAuth'
 
 class TimetableQuickView extends Component {
+
+
 
 
 
@@ -22,7 +25,14 @@ class TimetableQuickView extends Component {
      componentDidMount(){
 
        this.loadInterval = setInterval(this.getTime,1000)
-     }
+
+       const t =   setTimeout(()=>{
+
+        //   this.props.history.push('/student/timetable')
+
+         },10000)
+       }
+
 
 
   getTime = ()=>{
@@ -118,4 +128,4 @@ const mapStateToProps = (state)=>{
 
   }
 }
-export default connect(mapStateToProps,null)(requireConfigAuth(TimetableQuickView))
+export default connect(mapStateToProps,null)(requireConfigAuth(withRouter(TimetableQuickView)))

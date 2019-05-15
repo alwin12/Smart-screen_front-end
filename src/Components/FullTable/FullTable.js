@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import ReactTable from "react-table";
 import {connect} from 'react-redux'
 import styled from 'styled-components'
+import {withRouter} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUniversity } from '@fortawesome/free-solid-svg-icons'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +10,10 @@ import { faChalkboardTeacher } from '@fortawesome/free-solid-svg-icons'
 import { faClock } from '@fortawesome/free-solid-svg-icons'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
+import { socketConnection,eventEmiters,daysTimetableListener,advertsListener,socketAuth,socketJwt} from '../../socket-client/socketClient'
+import {setSocket,setTimetable,modifyTimetable,setAdverts} from '../../redux/actions.js'
+import {activeScheduler,innactiveScheduler} from "../../time-scheduler/timeScheduler"
+import {sort,getEndTimes,authentication} from '../../utils/utils.js'
 
  import TimeTableCard from '../TimeTableCard/TimeTableCard'
 
@@ -18,13 +23,28 @@ import {HeaderWithIcon,Status,Coursename,End,Start,Lecturer} from './Style.js'
 
 import './fulltable.css'
 
+import io from 'socket.io-client'
 
+
+
+const mapDispatchToProps = (dispatch)=>{
+
+ return {
+  setSocket: socket => dispatch(setSocket(socket)),
+  setTimetable: (callback) => dispatch(setTimetable(callback)),
+  setAdverts: () => dispatch(setAdverts()),
+  modifyTimetable:()=> dispatch(modifyTimetable()),
+  activeScheduler: (timetable)=> dispatch(activeScheduler(timetable)),
+  innactiveScheduler:(endTime)=> dispatch(innactiveScheduler(endTime))
+}
+}
 
 
 const mapStateToProps = (state)=>{
   return {
 
     timetable:state.socketIO.timetable,
+    configToken:state.configAuth.configToken
 
   }
 }
@@ -34,14 +54,50 @@ const mapStateToProps = (state)=>{
 class FullTable extends Component {
 
    state = {
-     name: 'alwin'
+     name: 'alwin',
+
    }
 
+
+
  componentDidMount() {
+// let socket = io.connect('http://localhost:3001/',{query:{token:localStorage.getItem('configToken')}});
+//
+//    this.props.setSocket(socket);
+//
+//
+//         this.props.setAdverts();
+//       this.props.setTimetable(()=>{
+//
+//   if(this.props.timetable.length<1){
+//     console.log('length')
+//    return
+//
+//  }
+//     this.props.timetable.map((timetable)=>{
+//
+//     console.log(this.props.timetable)
+//       this.props.activeScheduler(timetable)
+//
+//     })
+//
+//  let endTimes = getEndTimes(this.props.timetable);
+//
+//   endTimes.map((endTime)=>{
+//     this.props.innactiveScheduler(endTime);
+//   })
+//
+//
+//
+//
+//       });
+//
+//
+//
+//
 
-  // this.props.disableDisplayTableButton();
 
-   console.log('timetable',this.props.timetable);
+
  }
 
 
@@ -141,4 +197,4 @@ const columns = [
 }
 
 
-export default connect(mapStateToProps,null)(FullTable)
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(FullTable))

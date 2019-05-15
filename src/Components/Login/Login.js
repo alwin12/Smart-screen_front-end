@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 
 
 
-import {Container} from './Style.js'
+import {Container} from '../../Style.js'
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -74,94 +74,7 @@ state = {
     };
 
 
-// onSubmit = (event)=>{
-//
-//   let validate = this.state.validate;
-//    validate.validateEmail = true;
-//    validate.validatePassword= true;
-//    this.setState({validate:validate})
-//
-//       event.preventDefault();
-//      this.validator().then(()=>{
-//
-//
-//   axios.post('http://localhost:3002/staff/register',{
-//
-//   email: this.state.email,
-//   password:this.state.password
-//
-// }).then((resp)=>{
-//
-//
-// //  sessionStorage.setItem('token', resp.data.token);
-//
-//   if(resp.data.staff._id){
-//
-//  //authorise user using authorisation object
-//
-//    this.props.authentication.authenticate(resp.data.token)
-//
-//    this.setState({isSignedIn:true});
-//
-//
-//   }
-//
-//
-//
-// })
-//
-//    }).catch(status=>{
-//
-//
-//     console.log('rejected')
-//     this.setState({validate:status})
-//
-//
-//
-//
-// })
-//
-// }
-//
-//  validator = () =>{
-//
-//    const email = this.state.email;
-//    const password = this.state.password;
-//
-//
-// return  new Promise((resolve,reject)=>{
-//
-//
-//  let validate = this.state.validate;
-//
-// if(email===''){
-//
-//    validate.validateEmail = false
-//   console.log('email wrong')
-//   reject(validate);
-//
-// }
-// if(password ===''){
-//   console.log('password wrong')
-//   validate.validatePassword = false;
-//   reject(validate);
-// }
-//
-// if(!EmailValidator.validate(email)){
-//
-//   validate.validateEmail = false;
-//   reject(validate);
-// }
-//
-// resolve();
-//
-//
-//
-// })
-//
-//
-//
-//  }
+
 
 
 render(){
@@ -179,11 +92,14 @@ return (
           <Grid item>
             <AccountCircle />
           </Grid>
+
           <Grid item>
             <TextField onChange = {this.props.setEmailField} type='email' error = {this.props.emailError} id="input-with-icon-grid" label="email" />
           </Grid>
         </Grid>
+
       </div>
+
       <div className={classes.margin}>
      <Grid container spacing={8} alignItems="flex-end">
        <Grid item>
@@ -223,8 +139,6 @@ return (
 
 
          });
-
-
 
      }}
      variant="contained" color="primary" className={classes.button}>

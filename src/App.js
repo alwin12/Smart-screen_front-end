@@ -13,12 +13,13 @@ import Home from './Components/Home/Home.js'
 import Online from './Components/Online/Online.js'
 import Login from './Components/Login/Login.js'
 import Signin from './Components/Signin/Signin.js'
+import ConfigPage from './Components/ConfigPage/ConfigPage'
 import Timetable from './Components/Timetable/Timetable.js'
-import AddTimetable from './Components/AddTimetable/AddTimetable.js'
+import TimetableUploader from './Components/TimetableUploader/TimetableUploader.js'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import TimetableQuickView from './Components/TimetableQuickView/TimetableQuickView'
 import {connect} from 'react-redux'
-
+//import '../semantic/dist/semantic.min.css'
 
 import { socketConnection,eventEmiters,daysTimetableListener,advertsListener,socketAuth,socketJwt} from './socket-client/socketClient'
 import {activeScheduler,innactiveScheduler} from "./time-scheduler/timeScheduler"
@@ -28,7 +29,7 @@ import {setSocket,setTimetable,modifyTimetable,setAdverts} from './redux/actions
 
 import io from 'socket.io-client'
 
- let socket = io.connect('http://localhost:3002/');
+ //let socket = io.connect('http://localhost:3001/');
 
 
 const mapStateToProps = (state) =>{
@@ -103,120 +104,35 @@ componentDidMount(){
 
 
 
-
-
-
-     this.props.setSocket(socket);
-       this.props.setAdverts();
-     this.props.setTimetable(()=>{
-
-if(this.props.timetable.length<1){
-  return
-
-}
-   this.props.timetable.map((timetable)=>{
-
-console.log(this.props.timetable)
-     this.props.activeScheduler(timetable)
-
-   })
-
-
-
-
-let endTimes = getEndTimes(this.props.timetable);
-
- endTimes.map((endTime)=>{
-   this.props.innactiveScheduler(endTime);
- })
-
-     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-// onStudentClick= () =>{
+//      this.props.setSocket(socket);
+//        this.props.setAdverts();
+//      this.props.setTimetable(()=>{
 //
+//  if(this.props.timetable.length<1){
+//   return
 //
+// }
+//    this.props.timetable.map((timetable)=>{
 //
-//
-//
-//
-//
-//   student.student = true;
-//    let timetable = timetables.timetable
-//
-//    timetable.map((timetable)=>{
-//
-//      timetable.status = {
-//         active:  false,
-//         previous: false,
-//         next: false,
-//
-//      }
+//    console.log(this.props.timetable)
+//      this.props.activeScheduler(timetable)
 //
 //    })
 //
 //
 //
 //
-//     student.Timetable= sort(timetable);
-//  console.log(this.state.student)
+// let endTimes = getEndTimes(this.props.timetable);
 //
-//     this.setState({student:student})
+//  endTimes.map((endTime)=>{
+//    this.props.innactiveScheduler(endTime);
+//  })
 //
-//
-//
-//
-//   let jobs = [];
-//   this.state.Timetable.map((timetable,index)=>{
-//     jobs.push(activeScheduler(this,timetable))
-//
-//   })
-//
-//   let endTimes = getEndTimes(this.state.student.Timetable)
-//    console.log(endTimes)
-//   endTimes.map((endTime)=>{
-//
-//
-//   jobs.push(innactiveScheduler(this,endTime));
-//
-//
-//   })
-//
-//
-//
-//
-//
-//  //    advertsListener(socket).then((adverts)=>{
-//  //
-//  //
-//  //
-//  //     console.log('adverts',adverts.adverts.resources)
-//  //
-//  //       student.adverts = adverts.adverts.resources;
-//  //       student.student = true;
-//  //       student.tableDisplayed = false;
-//  //
-//  //   this.setState({student:student})
-//  //     console.log(this.state.student  )
-//  // sessionStorage.setItem('student',JSON.stringify(this.state.student));
-//  //
-//  //   })
-//
-//
-// }
+//      });
+
+
+}
+
 
 
  setStaff = ()=>{
@@ -263,13 +179,13 @@ student.tableDisplayed = false;
 
 
 
-  
+
 
 
     <Route exact path = '/' render={()=>{
 
 
-    return(<Redirect to ='/staff/login'/>)
+    return(<Redirect to ='/student/quickview'/>)
 
     }}/>
 
@@ -320,11 +236,7 @@ student.tableDisplayed = false;
         return (<Upload/>)
 
    }}/>
-   <Route path = '/staff/addtimetable' render = {()=>{
-
-        return (<AddTimetable />)
-
-   }}/>
+   
 
    <Route path = '/student/quickview' render = {()=>{
 
@@ -332,6 +244,11 @@ student.tableDisplayed = false;
 
    }}/>
 
+   <Route path = '/staff/timetableUploader' render = {()=>{
+
+        return (<TimetableUploader />)
+
+   }}/>
 
 
 

@@ -1,9 +1,31 @@
 import React,{Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect,withRouter} from 'react-router-dom';
 import axios from 'axios';
 import {socketAuth} from '../../socket-client/socketClient';
+import {connect} from 'react-redux'
 
+import {setRoomField,setPinField,configAuth} from '../../redux/configActions.js'
 
+import {Container} from '../../Style.js'
+
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
+import {setSocket,setTimetable,modifyTimetable,setAdverts} from '../../redux/actions.js'
+import {activeScheduler,innactiveScheduler} from "../../time-scheduler/timeScheduler"
+import {sort,getEndTimes,authentication} from '../../utils/utils.js'
+
+import io from 'socket.io-client'
+
+const styles = theme => ({
+  margin: {
+    margin: '40px',
+  },
+});
 
 
 class Starter extends Component {
@@ -30,7 +52,7 @@ class Starter extends Component {
 
 
 
-   axios.post('http://localhost:3002/student/lecturehall',{
+   axios.post('http://localhost:3001/student/lecturehall',{
 
      building:this.state.building,
      lectureHall: this.state.lectureHall
@@ -52,6 +74,63 @@ class Starter extends Component {
 
            }
 
+     loadData =()=>{
+
+
+
+      let socket = io.connect('http://localhost:3001/',{query:{token:localStorage.getItem('configToken')}});
+
+
+
+                this.props.setSocket(socket);
+
+                 socket.on('unauthorized',function(error,callback){
+
+                      if(error.data.type ==='UnauthorizedError'|| error.data.code==='invalid_token'){
+
+                        this.history.push('student/starter');
+
+                        
+
+
+                      }
+
+
+                 })
+
+                     this.props.setAdverts();
+                   this.props.setTimetable(()=>{
+
+               if(this.props.timetable.length<1){
+                 console.log('length')
+                return
+
+              }
+                 this.props.timetable.map((timetable)=>{
+
+                 console.log(this.props.timetable)
+                   this.props.activeScheduler(timetable)
+
+                 })
+
+              let endTimes = getEndTimes(this.props.timetable);
+
+               endTimes.map((endTime)=>{
+                 this.props.innactiveScheduler(endTime);
+               })
+
+                   });
+
+
+
+
+
+
+
+           }
+
+
+
 
 render(){
 
@@ -71,42 +150,64 @@ render(){
 
   return(
 
-    <div>
+    <Container>
 
+    <div className = {this.props.classes.margin}>
+    <Grid container spacing={8} alignItems="flex-end">
+      <Grid item>
 
-  <button onClick = {()=>{
+      </Grid>
 
-  this.setState({student:true})
+      <Grid item>
+        <TextField  type='text'  id="input-with-icon-grid" label="room"  onChange = {this.props.setRoomField}/>
+      </Grid>
 
+    </Grid>
 
+    <div className={this.props.classes.margin}>
+   <Grid container spacing={8} alignItems="flex-end">
+   <Grid item>
 
+   </Grid>
+   <Grid item>
+     <TextField  type='password'  id="input-with-icon-grid" label="pin" onChange = {this.props.setPinField} />
+   </Grid>
 
-
-  }}>student</button>
-
-  <button onClick = {()=>{
-
-     this.props.onStaffClick();
-    this.setState({staffPortal:true})
-
-  }}>staff</button>
-
-{this.state.student && <div>
-
-    <label for="building" class="building">Building</label>
-    <input onChange = {this.onBuildingChange} id="building" type="text" />
-
-    <label for="Room" class="Room">Room</label>
-    <input onChange= {this.onlectureHallChange} id="Room" type="text" />
-    <button onClick = {this.onGoClick}> Go </button>
+   </Grid>
+   </div>
 
 
 
+</div>
+
+<Button  style={{alignSelf:'center',margin:'4px'}} onClick = {()=>{
+
+this.props.configAuth(()=>{
 
 
-  </div>}
 
-    </div>
+   this.loadData();
+
+    this.props.history.push('/student/quickview')
+
+
+
+
+
+
+})
+
+
+}}
+  variant="contained" color="primary" className={this.props.classes.button} >
+   Go
+ </Button>
+
+
+
+  </Container>
+
+
 
 
 
@@ -117,6 +218,33 @@ render(){
 
 
 }
+// <label for="building" class="building">Building</label>
+// <input onChange = {this.onBuildingChange} id="building" type="text" />
+//
+// <label for="Room" class="Room">Room</label>
+// <input onChange= {this.onlectureHallChange} id="Room" type="text" />
+// <button onClick = {this.onGoClick}> Go </button>
+const mapStateToProps = (state)=>{
+  return{
+timetable:state.socketIO.timetable
+  }
+}
+const mapDispatchToProps = (dispatch)=>{
+  return {
+
+    setRoomField: (e) => dispatch(setRoomField(e.target.value)),
+    setPinField:(e)=> dispatch(setPinField(e.target.value)),
+    configAuth:(callback)=> dispatch(configAuth(callback)),
+
+    setSocket: socket => dispatch(setSocket(socket)),
+    setTimetable: (callback) => dispatch(setTimetable(callback)),
+    setAdverts: () => dispatch(setAdverts()),
+    modifyTimetable:()=> dispatch(modifyTimetable()),
+    activeScheduler: (timetable)=> dispatch(activeScheduler(timetable)),
+    innactiveScheduler:(endTime)=> dispatch(innactiveScheduler(endTime))
 
 
-export default Starter
+  }
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Starter)))

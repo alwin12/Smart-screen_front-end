@@ -3,7 +3,8 @@ import {SET_TIMETABLE,SET_ADVERTS,SET_SOCKET,
 RECIEVE_ADVERTS_FAILED,RECIEVE_ADVERTS_PENDING,RECIEVE_ADVERTS_SUCCESS,
 SET_EMAIL_FIELD,SET_PASSWORD_FIELD,LOGIN_PENDING,LOGIN_SUCCESS,LOGIN_FAILED,
 UPLOAD_PENDING,UPLOAD_SUCCESS,UPLOAD_FAILED,SET_IMAGE_FIELD,EMAIL_FIELD_ERROR,VALID_EMAIL,
-VIEW_TIMETABLE,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,SET_PREVIEW_IMAGE,REMOVE_PREVIEW_IMAGE} from './constants.js'
+VIEW_TIMETABLE,DISPLAY_TIMETABLE,HIDE_TIMETABLE,SET_AS_STAFF,SET_AS_STUDENT,LOGOUT,
+SET_PREVIEW_IMAGE,REMOVE_PREVIEW_IMAGE,CONFIG_AUTH_SUCCESS,CONFIG_AUTH_FAILED} from './constants.js'
 
 import axios from 'axios'
 import * as EmailValidator from 'email-validator';
@@ -112,13 +113,15 @@ export const setTimetable = (callback) =>(dispatch,getState)=>{
 
 }
 
+
+
 export const login = (callback) =>(dispatch,getState)=>{
 
    dispatch({type:LOGIN_PENDING})
 
    console.log(getState().inputFields.emailField)
 
-    axios.post('http://localhost:3002/login',{
+    axios.post('http://localhost:3001/login',{
 
    email: getState().inputFields.emailField,
    password:getState().inputFields.passwordField
@@ -156,7 +159,7 @@ export const uploadAdvert = () => (dispatch,getState) => {
    }
  }
 
-    axios.post('http://localhost:3002/staff/upload',formData,config).then((data)=>{
+    axios.post('http://localhost:3001/staff/upload',formData,config).then((data)=>{
 
   console.log('upload data',data)
 

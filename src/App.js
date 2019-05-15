@@ -15,11 +15,11 @@ import Login from './Components/Login/Login.js'
 import Signin from './Components/Signin/Signin.js'
 import ConfigPage from './Components/ConfigPage/ConfigPage'
 import Timetable from './Components/Timetable/Timetable.js'
-import AddTimetable from './Components/AddTimetable/AddTimetable.js'
+import TimetableUploader from './Components/TimetableUploader/TimetableUploader.js'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import TimetableQuickView from './Components/TimetableQuickView/TimetableQuickView'
 import {connect} from 'react-redux'
-
+//import '../semantic/dist/semantic.min.css'
 
 import { socketConnection,eventEmiters,daysTimetableListener,advertsListener,socketAuth,socketJwt} from './socket-client/socketClient'
 import {activeScheduler,innactiveScheduler} from "./time-scheduler/timeScheduler"
@@ -29,7 +29,7 @@ import {setSocket,setTimetable,modifyTimetable,setAdverts} from './redux/actions
 
 import io from 'socket.io-client'
 
- let socket = io.connect('http://localhost:3002/');
+ //let socket = io.connect('http://localhost:3001/');
 
 
 const mapStateToProps = (state) =>{
@@ -185,7 +185,7 @@ student.tableDisplayed = false;
     <Route exact path = '/' render={()=>{
 
 
-    return(<Redirect to ='/staff/login'/>)
+    return(<Redirect to ='/student/quickview'/>)
 
     }}/>
 
@@ -236,11 +236,7 @@ student.tableDisplayed = false;
         return (<Upload/>)
 
    }}/>
-   <Route path = '/staff/addtimetable' render = {()=>{
-
-        return (<AddTimetable />)
-
-   }}/>
+   
 
    <Route path = '/student/quickview' render = {()=>{
 
@@ -248,6 +244,11 @@ student.tableDisplayed = false;
 
    }}/>
 
+   <Route path = '/staff/timetableUploader' render = {()=>{
+
+        return (<TimetableUploader />)
+
+   }}/>
 
 
 

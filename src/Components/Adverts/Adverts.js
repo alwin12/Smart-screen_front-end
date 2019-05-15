@@ -23,7 +23,7 @@ this.props.enableDisplayTableButton();
        }
 
   render() {
-
+console.log(this.props.adverts)
 const adverts = this.props.adverts.map((advert)=>{
 
   return <div><img alt='img' src = {advert.secure_url} height='700' width='1400'/></div>

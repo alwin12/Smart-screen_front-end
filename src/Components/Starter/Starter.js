@@ -15,6 +15,11 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import {setSocket,setTimetable,modifyTimetable,setAdverts} from '../../redux/actions.js'
+import {activeScheduler,innactiveScheduler} from "../../time-scheduler/timeScheduler"
+import {sort,getEndTimes,authentication} from '../../utils/utils.js'
+
+import io from 'socket.io-client'
 
 const styles = theme => ({
   margin: {
@@ -47,7 +52,7 @@ class Starter extends Component {
 
 
 
-   axios.post('http://localhost:3002/student/lecturehall',{
+   axios.post('http://localhost:3001/student/lecturehall',{
 
      building:this.state.building,
      lectureHall: this.state.lectureHall
@@ -68,6 +73,63 @@ class Starter extends Component {
 
 
            }
+
+     loadData =()=>{
+
+
+
+      let socket = io.connect('http://localhost:3001/',{query:{token:localStorage.getItem('configToken')}});
+
+
+
+                this.props.setSocket(socket);
+
+                 socket.on('unauthorized',function(error,callback){
+
+                      if(error.data.type ==='UnauthorizedError'|| error.data.code==='invalid_token'){
+
+                        this.history.push('student/starter');
+
+                        
+
+
+                      }
+
+
+                 })
+
+                     this.props.setAdverts();
+                   this.props.setTimetable(()=>{
+
+               if(this.props.timetable.length<1){
+                 console.log('length')
+                return
+
+              }
+                 this.props.timetable.map((timetable)=>{
+
+                 console.log(this.props.timetable)
+                   this.props.activeScheduler(timetable)
+
+                 })
+
+              let endTimes = getEndTimes(this.props.timetable);
+
+               endTimes.map((endTime)=>{
+                 this.props.innactiveScheduler(endTime);
+               })
+
+                   });
+
+
+
+
+
+
+
+           }
+
+
 
 
 render(){
@@ -122,14 +184,22 @@ render(){
 
 this.props.configAuth(()=>{
 
-//this.props.setSocket(socket)
-  this.props.history.push('/student/timetable')
+
+
+   this.loadData();
+
+    this.props.history.push('/student/quickview')
+
+
+
+
+
 
 })
 
 
 }}
-variant="contained" color="primary" className={this.props.classes.button} >
+  variant="contained" color="primary" className={this.props.classes.button} >
    Go
  </Button>
 
@@ -156,7 +226,7 @@ variant="contained" color="primary" className={this.props.classes.button} >
 // <button onClick = {this.onGoClick}> Go </button>
 const mapStateToProps = (state)=>{
   return{
-
+timetable:state.socketIO.timetable
   }
 }
 const mapDispatchToProps = (dispatch)=>{
@@ -165,6 +235,13 @@ const mapDispatchToProps = (dispatch)=>{
     setRoomField: (e) => dispatch(setRoomField(e.target.value)),
     setPinField:(e)=> dispatch(setPinField(e.target.value)),
     configAuth:(callback)=> dispatch(configAuth(callback)),
+
+    setSocket: socket => dispatch(setSocket(socket)),
+    setTimetable: (callback) => dispatch(setTimetable(callback)),
+    setAdverts: () => dispatch(setAdverts()),
+    modifyTimetable:()=> dispatch(modifyTimetable()),
+    activeScheduler: (timetable)=> dispatch(activeScheduler(timetable)),
+    innactiveScheduler:(endTime)=> dispatch(innactiveScheduler(endTime))
 
 
   }

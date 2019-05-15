@@ -18,7 +18,7 @@ componentDidUpdate(){
 
  authorise = ()=>{
 
-  console.log('called')
+
     if(this.props.configToken.length<3){
 
      this.props.history.push('/starter')

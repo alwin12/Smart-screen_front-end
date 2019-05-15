@@ -5,6 +5,7 @@ import {socketIO,inputFields,loginAPI,uploadAPI,app,configAuth} from './redux/re
 
 import thunkMiddleware from 'redux-thunk'
 import {createLogger} from 'redux-logger'
+import {loadFromLocalStorage,saveToLocalStorage} from './utils/storage.js'
 
 
 const rootReducer = combineReducers({socketIO,inputFields,loginAPI,uploadAPI,app,configAuth})
@@ -16,14 +17,8 @@ const logger = createLogger();
 export default ({children,initialState={}})=>{
 
 
-  const store = createStore(rootReducer,{
-    loginAPI:{token:localStorage.getItem('token')||''},
-    configAuth:{configToken:localStorage.getItem('token')||''},
-    ...initialState
-
-
-      // initial state
-  },applyMiddleware(thunkMiddleware,logger))
+  const store = createStore(rootReducer,loadFromLocalStorage(),applyMiddleware(thunkMiddleware,logger))
+  store.subscribe(()=> saveToLocalStorage(store.getState()))
 
   return (
 

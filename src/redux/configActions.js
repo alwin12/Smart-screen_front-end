@@ -12,7 +12,7 @@ export const setPinField = (text)=>({type:SET_PIN_FIELD,payload:text})
 export const configAuth = (callback) => (dispatch,getState)=>{
 dispatch({type:CONFIG_AUTH_PENDING})
 
-  axios.post('http://localhost:3002/config',{
+  axios.post('http://localhost:3001/config',{
 
    room: getState().inputFields.roomField,
    pin:getState().inputFields.pinField

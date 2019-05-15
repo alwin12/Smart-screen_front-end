@@ -121,7 +121,7 @@ export const login = (callback) =>(dispatch,getState)=>{
 
    console.log(getState().inputFields.emailField)
 
-    axios.post('http://localhost:3002/login',{
+    axios.post('http://localhost:3001/login',{
 
    email: getState().inputFields.emailField,
    password:getState().inputFields.passwordField
@@ -159,7 +159,7 @@ export const uploadAdvert = () => (dispatch,getState) => {
    }
  }
 
-    axios.post('http://localhost:3002/staff/upload',formData,config).then((data)=>{
+    axios.post('http://localhost:3001/staff/upload',formData,config).then((data)=>{
 
   console.log('upload data',data)
 

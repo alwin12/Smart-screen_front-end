@@ -61,37 +61,40 @@ class FullTable extends Component {
 
 
  componentDidMount() {
-let socket = io.connect('http://localhost:3002/',{query:{token:localStorage.getItem('configToken')}});
-
-   this.props.setSocket(socket);
-
-
-        this.props.setAdverts();
-      this.props.setTimetable(()=>{
-
-  if(this.props.timetable.length<1){
-    console.log('length')
-   return
-
- }
-    this.props.timetable.map((timetable)=>{
-
-    console.log(this.props.timetable)
-      this.props.activeScheduler(timetable)
-
-    })
-
- let endTimes = getEndTimes(this.props.timetable);
-
-  endTimes.map((endTime)=>{
-    this.props.innactiveScheduler(endTime);
-  })
-
-      });
-
-
-
-
+// let socket = io.connect('http://localhost:3001/',{query:{token:localStorage.getItem('configToken')}});
+//
+//    this.props.setSocket(socket);
+//
+//
+//         this.props.setAdverts();
+//       this.props.setTimetable(()=>{
+//
+//   if(this.props.timetable.length<1){
+//     console.log('length')
+//    return
+//
+//  }
+//     this.props.timetable.map((timetable)=>{
+//
+//     console.log(this.props.timetable)
+//       this.props.activeScheduler(timetable)
+//
+//     })
+//
+//  let endTimes = getEndTimes(this.props.timetable);
+//
+//   endTimes.map((endTime)=>{
+//     this.props.innactiveScheduler(endTime);
+//   })
+//
+//
+//
+//
+//       });
+//
+//
+//
+//
 
 
 

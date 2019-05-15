@@ -5,6 +5,10 @@ import "./TimetableQuickView.css"
 import {withRouter} from 'react-router-dom'
 import spacer from './spacer.jpeg'
 import requireConfigAuth from '../../HOCs/requireConfigAuth'
+import loadData from '../../loadData.js'
+
+
+
 
 class TimetableQuickView extends Component {
 
@@ -24,13 +28,15 @@ class TimetableQuickView extends Component {
 
      componentDidMount(){
 
+console.log(this.props.timetable)
+
        this.loadInterval = setInterval(this.getTime,1000)
 
        const t =   setTimeout(()=>{
 
-        //   this.props.history.push('/student/timetable')
+           //this.props.history.push('/student/adverts')
 
-         },10000)
+         },20000)
        }
 
 

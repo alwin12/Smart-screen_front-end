@@ -21,7 +21,8 @@ import {sort,getEndTimes,authentication} from '../../utils/utils.js'
 
 import {HeaderWithIcon,Status,Coursename,End,Start,Lecturer} from './Style.js'
 
-import './fulltable.css'
+//import './fulltable.css'
+//vp,ment
 
 import io from 'socket.io-client'
 

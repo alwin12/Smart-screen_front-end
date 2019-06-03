@@ -8,6 +8,7 @@ SET_PREVIEW_IMAGE,REMOVE_PREVIEW_IMAGE,CONFIG_AUTH_SUCCESS,CONFIG_AUTH_FAILED} f
 
 import axios from 'axios'
 import * as EmailValidator from 'email-validator';
+import {getTb} from '../utils/time'
 
 export const setSocket = (socket)=> ({type:SET_SOCKET,payload:socket})
 export const setEmailField = (text)=> {
@@ -97,8 +98,17 @@ export const setTimetable = (callback) =>(dispatch,getState)=>{
 
     getState().socketIO.socket.on('timetable',(data)=>{
 
+        console.log(data[0])
 
-       dispatch({type:RECIEVE_TIMETABLE_SUCCESS,payload:data.timetable})
+      let timetable = getTb(data);
+
+
+
+
+
+
+      dispatch({type:RECIEVE_TIMETABLE_SUCCESS,payload:timetable})
+      
           callback();
 
 
@@ -112,6 +122,38 @@ export const setTimetable = (callback) =>(dispatch,getState)=>{
     })
 
 }
+
+export const getRooms = (callback) =>(dispatch,getState)=>{
+
+    // dispatch({type:RECIEVE_TIMETABLE_PENDING})
+
+    getState().socketIO.socket.on('rooms',({data})=>{
+
+        //console.log(data[0].room);
+
+      const rooms = [...new Set(data.map(tb=>tb.room) )]
+
+
+         dispatch({type:'ROOMS',payload:rooms})
+
+   console.log(rooms)
+
+      // dispatch({type:"ROOM_SUCCESS",payload:data})
+
+
+
+
+    },(err)=>{
+
+   if(err){
+     dispatch({type:RECIEVE_TIMETABLE_FAILED,payload:err})
+   }
+
+
+    })
+
+}
+
 
 
 

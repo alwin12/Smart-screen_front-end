@@ -34,7 +34,8 @@ const initialsocketIOState = {
   advertsPending:false,
   timetableError:'',
   advertsError:'',
-  adverts:[]
+  adverts:[],
+  rooms: []
 }
 
 const initialInputFieldState = {
@@ -109,7 +110,9 @@ export const socketIO= (state=initialsocketIOState,action={}) =>{
 case RECIEVE_TIMETABLE_SUCCESS:
 
 
-
+   if(action.payload.length<1){
+    return {...state,timetable:[],timetablePending:false}
+   }
 
 let modifiedTimetable =   action.payload.map((timetable)=>{
 
@@ -117,9 +120,10 @@ let modifiedTimetable =   action.payload.map((timetable)=>{
 
 
 return  ({...timetable,status:{
- active:false,
- previous:false,
- next:false
+past: false,
+ now:false,
+ next:false,
+ previous:false
 
 }})
 
@@ -127,10 +131,13 @@ return  ({...timetable,status:{
 
 //sort
 let sortedTimetable = sort(modifiedTimetable)
-//register scheduler
 
 
 
+  sortedTimetable[0].status.next = true
+
+
+console.log("sorted",sortedTimetable)
 
 
 return {...state,timetable:sortedTimetable,timetablePending:false}
@@ -158,10 +165,16 @@ case RECIEVE_ADVERTS_SUCCESS:
 
 
 
-
 return {...state,adverts:action.payload}
 
+
+case "ROOMS":
+
+   return {...state,rooms:action.payload}
+
+
 case RECIEVE_ADVERTS_FAILED:
+
 
 
 return {...state,advertsError:action.payload}
@@ -173,27 +186,53 @@ return {...state}
 
 case "SET_TO_ACTIVE":
 
+let i= 0;
 
-let timetable = state.timetable.map((timetable)=>{
+let timetable = state.timetable.map((timetable,index)=>{
 
 
      if(timetable._id==action.payload._id){
-     return {...timetable,status:{active:true,innactive:false,next:false}}
 
-}
-return timetable
+    i = index
+
+     return {...timetable,status:{past:false,now:true,next:false,previous:false}}
+
+          }
+            return timetable
 
 
-})
+          })
+timetable[i].status = {past:false,now:true,next:false,previous:false}
+
+      if(i ==timetable.length-1){
 
 
-return {...state,timetable:timetable}
 
-case "SET_TO_NEXT":
+          timetable[i-1].status = {past:true,now:false,next:false,previous:false}
 
- let index = undefined;
 
- timetable = state.timetable.map((i,timetable)=>{
+      }
+      else if(i-1 === -1){
+
+         timetable[i+1].status = {past:false,now:false,next:false,previous:false}
+
+      }
+      else {
+
+          timetable[i-1].status = {past:true,now:false,next:false,previous:false}
+
+          timetable[i+1].status = {past:false,now:false,next:false,previous:false}
+         }
+
+    console.log(timetable)
+
+    return {...state,timetable:timetable}
+
+    case "SET_TO_NEXT":
+
+    let index = undefined;
+
+    timetable = state.timetable.map((i,timetable)=>{
 
 
      if(timetable._id==action.payload._id){

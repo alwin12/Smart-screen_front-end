@@ -1,13 +1,14 @@
 import React,{Component} from 'react'
-import background from './background.jpeg'
+import Background from './background.jpeg'
+
 import {connect} from 'react-redux'
 import "./TimetableQuickView.css"
 import {withRouter} from 'react-router-dom'
 import spacer from './spacer.jpeg'
 import requireConfigAuth from '../../HOCs/requireConfigAuth'
 import loadData from '../../loadData.js'
-
-
+import {ParentDiv,TopSection,Now,Next,NoTbText,NoTbDiv} from './style.js'
+import { Card, Icon,Container } from 'semantic-ui-react'
 
 
 class TimetableQuickView extends Component {
@@ -68,15 +69,19 @@ this.setState({time:t,amPm:amPm})
  }
 
  render(){
-   let now = {
 
-   }
-   let next  = {}
+
+
+
+
+
+   let now = {}
+   let next = {}
 
    this.props.timetable.map((timetable)=>{
 
 
-     if(timetable.status.active ===true){
+     if(timetable.status.now ===true){
 
        now = timetable;
      }
@@ -92,31 +97,104 @@ this.setState({time:t,amPm:amPm})
 
     return(
 
+    <ParentDiv style={{backgroundImage: `url(${Background})`}}>
+
+   <TopSection>
+    <div className='roomno'>room</div>
+      <div className="currenttime">{this.state.time} {this.state.amPm}</div>
+    </TopSection>
 
 
-         <div className = 'main' >
-      		<div class="container" >
-      		<img src={spacer} class="spacer"/>
-      		<div class="roomno"><p>Y016</p></div>
-      		<div class="currenttime"><p>{this.state.time}</p></div>
-      		<div  class="one">
-      		<div class="status"><p>Now</p></div>
-      		<div class="subjectcode"><p>ITECH3142</p></div>
-      		<div class="subjectname"><p>{now.lecture || 'none'} </p></div>
-      		<div class="lecturername"><p>{now.lecturerName || 'none'}</p></div>
-      		<div class="timeheld"><p>{now.startTime||'00:00'}- {now.endTime  ||'00:00'}</p></div>
+  {now.startTime? (
 
-      		</div>
-      		<div class="two">
-      			<div class="status"> <p>Next</p></div>
-      			<div class="subjectcode"><p>ITECH2004</p></div>
-      			<div class="subjectname"><p>{next.lecture || 'none'}</p></div>
-      			<div class="lecturername"><p>{next.lecturerName || 'none'}</p></div>
-      			<div class="timeheld"><p>{next.startTime||'00:00'}- {next.endTime  ||'00:00'}</p></div>
-              </div>
-      		</div>
+    <Now >
+<div className="now margin">Now</div>
+    <div className="time">{now.startTime}-{now.endTime}</div>
+    <div className="code">{now.code}</div>
+    <div className="name">{now.name}</div>
+    <div className="staff">{now.staffs}</div>
 
-          </div>
+  </Now>
+
+
+): <NoTbDiv now={true}>
+  <div className="now margin">Now</div>
+  <NoTbText>No Scheduled timetable</NoTbText>
+  </NoTbDiv>
+
+
+
+}
+
+
+
+
+
+
+    {next.startTime?
+      ( <Next>
+<div className="now margin">Next</div>
+      <div className="time">{next.startTime}-{next.endTime}</div>
+      <div className="code">{next.code}</div>
+      <div className="name">{next.name}</div>
+      <div className="staff">{next.staffs}</div>
+      </Next>)
+
+    : <NoTbDiv now={false}>
+    <div className="now margin">Next</div>
+    <NoTbText>No Scheduled timetable</NoTbText>
+    </NoTbDiv>
+
+  }
+
+
+
+
+
+    </ParentDiv>
+
+         // <div className = 'main' >
+      		// <div class="container" >
+      		// <img  class="spacer"/>
+      		// <div class="roomno"><p>Y016</p></div>
+      		// <div class="currenttime"><p>{this.state.time}</p></div>
+      		// <div  class="one">
+      		// <div class="status"><p>Now</p></div>
+         //
+         //
+         //  {now.startTime? (
+         //    <div>
+         //    <div class="subjectcode"><p>{now.code}</p></div>
+        	// 	<div class="subjectname"><p>{now.name } </p></div>
+        	// 	<div class="lecturername"><p>{now.staffs || 'none'}</p></div>
+        	// 	<div class="timeheld"><p>{now.startTime||'00:00'}- {now.endTime  ||'00:00'}</p></div>
+         //    </div>
+         //  ):<div>no timetable</div> }
+         //
+         //
+         //
+      		// </div>
+      		// <div class="two">
+      		// 	<div class="status"> <p>Next</p></div>
+         //
+         //    {next.startTime?(
+         //      <div>
+         //      <div class="subjectcode"><p>{next.code}</p></div>
+        	// 		<div class="subjectname"><p>{next.name || 'none'}</p></div>
+        	// 		<div class="lecturername"><p>{next.staffs || 'none'}</p></div>
+        	// 		<div class="timeheld"><p>{next.startTime||'00:00'}- {next.endTime  ||'00:00'}</p></div>
+         //      </div>
+         //
+         //
+         //    ):<div>no timetable</div>}
+         //
+         //
+         //      </div>
+      		// </div>
+         //
+         //  </div>
+
+
 
     )
 

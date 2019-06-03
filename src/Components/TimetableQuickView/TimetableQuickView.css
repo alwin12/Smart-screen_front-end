@@ -3,78 +3,115 @@
 	background-repeat:no-repeat;
 	background-size:100% 100%;
 }
-
 .roomno{
 	color:#E21469;
 	font-family:'Montserrat';
-	font-size:75px;
-	position:absolute;
+	font-size:4em;
 	font-weight:bold;
-	left:70px;
-	top:-7px;
+	margin-top:25px;
+	margin-left:70px;
+
 
 
 }
 .currenttime{
 	color:#62217F;
 	font-family:'Montserrat';
-	font-size:50px;
+	font-size:4em;
 	font-weight:bold;
-	left:300px;
-	top:12px;
-	position:absolute;
+	margin-top:25px;
+	margin-right:50px;
 
 
 }
 p{
-	margin:5px;
+	margin:0.2vw;
 }
-.status{
+
+.now{
+	color:#7dc353;
+	font-family:'Montserrat';
+	font-weight:Extra-bold;
+	font-size:5em;
+
+}
+.status2{
 	color:#FDB713;
 	font-family:'Montserrat';
 	font-weight:Extra-bold;
-	font-size:80px;
+	font-size:6.5vw;
 
 }
-.one{
-position:absolute;
-right:800px;
-top:130px;
-text-align:center;
+
+.margin{
+	margin-top:20px;
+}
+.time{
+
 font-weight:bold;
 }
 .two{
 position:absolute;
-right:170px;
-top:135px;
+top:21vh;
 text-align:center;
+left:55vw;
 font-weight:bold;
 }
 
-.spacer{
-	width: 75%;
+.center{
+    width: 90%;
 	display:block;
-	margin-top:120px;
+	margin-top:19.25vh;
 	margin-left:auto;
 	margin-right:auto;
 }
-.subjectcode{
-	font-size:65px;
+.cancel1{
+width:40%;
+position:absolute;
+top:34vh;
+right:57.5vw;
+}
+.cancel2{
+width:32%;
+height:40%;
+display:block;
+position:absolute;
+top:35vh;
+left:56.5vw;
+}
+.noclass1{
+width:40%;
+position:absolute;
+top:34vh;
+right:57.5vw;
+}
+.noclass2{
+width:35%;
+display:block;
+position:absolute;
+top:40vh;
+left:55vw;
+}
+.code{
+	font-size:4vw;
 	color:#136BB5;
 	font-family:'Montserrat';
 }
-.subjectname{
-	font-size:55px;
+.name{
+	font-size:2em;
 	color:#E21469;
 	font-family:'Montserrat';
+	display:inline-block;
+
 }
-.lecturername{
-	font-size:45px;
+.staff{
+	font-size:2.75vw;
 	color:#070504;
 	font-family:'Montserrat';
+	margin-bottom:10px;
 }
-.timeheld{
-	font-size:35px;
+.time{
+	font-size:2vw;
 	color:#676463;
 	font-family:'Montserrat';
 }

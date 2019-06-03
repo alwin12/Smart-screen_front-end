@@ -3,11 +3,11 @@ import {Redirect,withRouter} from 'react-router-dom';
 import axios from 'axios';
 import {socketAuth} from '../../socket-client/socketClient';
 import {connect} from 'react-redux'
-
+import Background from './image.svg';
 import {setRoomField,setPinField,configAuth} from '../../redux/configActions.js'
 
 import {Container} from '../../Style.js'
-
+import { Dropdown } from 'semantic-ui-react'
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
@@ -47,29 +47,53 @@ class Starter extends Component {
  }
 
 
- onGoClick = () =>{
+   getDropDownOptions = (rooms)=>{
+
+
+       let dropDownOptions = rooms.map((room)=>{
+
+
+           return {value:room,key:room,text:room}
+
+
+       })
+
+       return dropDownOptions
+
+   }
+
+ onGoClick = (callback) =>{
+
+   //this.props.socket.emit('config',{room:this.props.room,pin:this.props.pin})
+
+    axios.post('http://localhost:3001/config',{room:this.props.room,pin:this.props.pin}).then(resp=>{
+
+      callback()
+    }).catch(e=>{
+
+    })
 
 
 
 
-   axios.post('http://localhost:3001/student/lecturehall',{
-
-     building:this.state.building,
-     lectureHall: this.state.lectureHall
-
-   }).then((resp)=>{
-     console.log(resp)
-
-      if(resp.data.lectureHall){
-
-
-     this.props.onStudentClick();
-     this.setState({authenticated:true})
-
-
-      }
-
-   })
+   // axios.post('http://localhost:3001/student/lecturehall',{
+   //
+   //   building:this.state.building,
+   //   lectureHall: this.state.lectureHall
+   //
+   // }).then((resp)=>{
+   //   console.log(resp)
+   //
+   //    if(resp.data.lectureHall){
+   //
+   //
+   //   this.props.onStudentClick();
+   //   this.setState({authenticated:true})
+   //
+   //
+   //    }
+   //
+   // })
 
 
            }
@@ -78,48 +102,52 @@ class Starter extends Component {
 
 
 
-      let socket = io.connect('http://localhost:3001/',{query:{token:localStorage.getItem('configToken')}});
+    //  let socket = io.connect('http://localhost:3001/');
+
+                //this.props.setSocket(socket);
+
+                 // socket.on('unauthorized',function(error,callback){
+                 //
+                 //      if(error.data.type ==='UnauthorizedError'|| error.data.code==='invalid_token'){
+                 //
+                 //        this.history.push('student/starter');
+                 //
+                 //
+                 //
+                 //
+                 //      }
+                 //
+                 //
+                 // })
 
 
 
-                this.props.setSocket(socket);
-
-                 socket.on('unauthorized',function(error,callback){
-
-                      if(error.data.type ==='UnauthorizedError'|| error.data.code==='invalid_token'){
-
-                        this.history.push('student/starter');
-
-                        
-
-
-                      }
-
-
-                 })
-
-                     this.props.setAdverts();
-                   this.props.setTimetable(()=>{
-
-               if(this.props.timetable.length<1){
-                 console.log('length')
-                return
-
-              }
-                 this.props.timetable.map((timetable)=>{
-
-                 console.log(this.props.timetable)
-                   this.props.activeScheduler(timetable)
-
-                 })
-
-              let endTimes = getEndTimes(this.props.timetable);
-
-               endTimes.map((endTime)=>{
-                 this.props.innactiveScheduler(endTime);
-               })
-
-                   });
+              //        this.props.setAdverts();
+              //
+              //
+              //
+              //      this.props.setTimetable(()=>{
+              //
+              //
+              //  if(this.props.timetable.length<1){
+              //    console.log('length')
+              //   return
+              //
+              // }
+              //    this.props.timetable.map((timetable)=>{
+              //
+              //    console.log(this.props.timetable)
+              //      this.props.activeScheduler(timetable)
+              //
+              //    })
+              //
+              // let endTimes = getEndTimes(this.props.timetable);
+              //
+              //  endTimes.map((endTime)=>{
+              //    this.props.innactiveScheduler(endTime);
+              //  })
+              //
+              //      });
 
 
 
@@ -150,50 +178,32 @@ render(){
 
   return(
 
-    <Container>
+    <div style={{background:`url(${Background})` ,height:'100vh'}}>
 
-    <div className = {this.props.classes.margin}>
-    <Grid container spacing={8} alignItems="flex-end">
-      <Grid item>
+    <Container style={{margin: "0 auto",}}>
 
-      </Grid>
+         <Dropdown
 
-      <Grid item>
-        <TextField  type='text'  id="input-with-icon-grid" label="room"  onChange = {this.props.setRoomField}/>
-      </Grid>
+         placeholder='Room'
+         fluid
+         selection
+         options={this.getDropDownOptions(this.props.rooms)}
 
-    </Grid>
+         onChange = {(e,{name,value})=>{
 
-    <div className={this.props.classes.margin}>
-   <Grid container spacing={8} alignItems="flex-end">
-   <Grid item>
-
-   </Grid>
-   <Grid item>
-     <TextField  type='password'  id="input-with-icon-grid" label="pin" onChange = {this.props.setPinField} />
-   </Grid>
-
-   </Grid>
-   </div>
+        this.props.setRoomField(value)
 
 
+      }}/>
 
-</div>
-
-<Button  style={{alignSelf:'center',margin:'4px'}} onClick = {()=>{
-
-this.props.configAuth(()=>{
+     <TextField style={{marginTop:'20px'}} type='password'  id="input-with-icon-grid" label="pin" onChange = {this.props.setPinField} />
 
 
+<Button  style={{alignSelf:'center',margin:'4px',marginTop:"50px"}} onClick = {()=>{
 
-   this.loadData();
+this.onGoClick(()=>{
 
-    this.props.history.push('/student/quickview')
-
-
-
-
-
+    this.props.history.push('/student/adverts')
 
 })
 
@@ -207,8 +217,7 @@ this.props.configAuth(()=>{
 
   </Container>
 
-
-
+  </div>
 
 
 
@@ -226,13 +235,18 @@ this.props.configAuth(()=>{
 // <button onClick = {this.onGoClick}> Go </button>
 const mapStateToProps = (state)=>{
   return{
-timetable:state.socketIO.timetable
+timetable:state.socketIO.timetable,
+socket: state.socketIO.socket,
+room:state.inputFields.roomField,
+pin:state.inputFields.pinField,
+rooms:state.socketIO.rooms
+
   }
 }
 const mapDispatchToProps = (dispatch)=>{
   return {
 
-    setRoomField: (e) => dispatch(setRoomField(e.target.value)),
+    setRoomField: (value) => dispatch(setRoomField(value)),
     setPinField:(e)=> dispatch(setPinField(e.target.value)),
     configAuth:(callback)=> dispatch(configAuth(callback)),
 
@@ -246,5 +260,5 @@ const mapDispatchToProps = (dispatch)=>{
 
   }
 }
-
+//<TextField  type='text'  id="input-with-icon-grid" label="room"  onChange = {this.props.setRoomField}/>
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Starter)))

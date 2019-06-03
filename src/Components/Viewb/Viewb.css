@@ -1,0 +1,92 @@
+.body{
+
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	font-family:'Montserrat';
+
+}
+.grid-container{
+display:grid;
+grid-template-columns:6.5vw auto minmax(auto,14vw) auto minmax(auto,33vw) minmax(auto,15vw) ;
+grid-template-rows:minmax(max-content,14vh) minmax(max-content,14vh) minmax(max-content,14vh) minmax(max-content,14vh);
+
+grid-row-gap:1.5vh;
+text-align:center;
+}
+.past{
+
+color:#62217F;
+font-weight:bold;
+font-size:3.5vw;
+
+}
+.status2{
+color:#7EC351;
+font-weight:bold;
+font-size:3.5vw;
+}
+.status3{
+color:#FDB713;
+font-weight:bold;
+font-size:3.5vw;
+}
+.code{
+color:#136BB5;
+font-weight:550;
+font-size:2.25vw;}
+.dash{
+color:#136BB5;
+font-weight:550;
+
+font-size:2.25vw;}
+
+.coursename{
+color:#136BB5;
+font-weight:550;
+font-size:2.25vw;
+
+}
+
+
+
+.name{
+font-style:oblique;
+font-weight:600;
+font-size:1.6em;
+
+}
+.t{
+font-weight:650;
+font-size:1.5vw;
+color:#676463;}
+
+.room{
+	color:#E21469;
+	font-family:'Montserrat';
+	font-size:5em;
+  margin-top:50px;
+  margin-bottom:20px;
+
+	font-weight:bold;
+
+
+
+}
+.time{
+	color:#62217F;
+	font-family:'Montserrat';
+	font-size:3em;
+	font-weight:bold;
+  margin-top:50px;
+  margin-left: 80px
+
+}
+.one{
+border-bottom:0.13vw solid #136BB5;
+}
+.two{
+border-bottom:0.13vw solid #136BB5;
+}
+.three{
+border-bottom:0.13vw solid #136BB5;
+}

@@ -20,16 +20,16 @@ import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import TimetableQuickView from './Components/TimetableQuickView/TimetableQuickView'
 import {connect} from 'react-redux'
 //import '../semantic/dist/semantic.min.css'
-
+import Viewb from './Components/Viewb/Viewb'
 import { socketConnection,eventEmiters,daysTimetableListener,advertsListener,socketAuth,socketJwt} from './socket-client/socketClient'
 import {activeScheduler,innactiveScheduler} from "./time-scheduler/timeScheduler"
 import {sort,getEndTimes,authentication} from './utils/utils.js'
-import {setSocket,setTimetable,modifyTimetable,setAdverts} from './redux/actions.js'
+import {setSocket,setTimetable,modifyTimetable,setAdverts,getRooms} from './redux/actions.js'
 //const io = require('socket.io-client');
 
 import io from 'socket.io-client'
 
- //let socket = io.connect('http://localhost:3001/');
+ let socket = io.connect('http://localhost:3001/');
 
 
 const mapStateToProps = (state) =>{
@@ -39,7 +39,8 @@ return {
 
 timetable:state.socketIO.timetable,
 student: state.app.student,
-staff:state.app.staff
+staff:state.app.staff,
+socket:state.socketIO.socket
 }
 
 }
@@ -54,7 +55,8 @@ const mapDispatchToProps = (dispatch) =>{
     setAdverts: () => dispatch(setAdverts()),
     modifyTimetable:()=> dispatch(modifyTimetable()),
     activeScheduler: (timetable)=> dispatch(activeScheduler(timetable)),
-    innactiveScheduler:(endTime)=> dispatch(innactiveScheduler(endTime))
+    innactiveScheduler:(endTime)=> dispatch(innactiveScheduler(endTime)),
+    getRooms: ()=> dispatch(getRooms())
 
 
 
@@ -68,6 +70,8 @@ const mapDispatchToProps = (dispatch) =>{
 
 
 class App extends Component {
+
+
 
  constructor(){
    super();
@@ -104,31 +108,46 @@ componentDidMount(){
 
 
 
-//      this.props.setSocket(socket);
-//        this.props.setAdverts();
-//      this.props.setTimetable(()=>{
-//
-//  if(this.props.timetable.length<1){
-//   return
-//
-// }
-//    this.props.timetable.map((timetable)=>{
-//
-//    console.log(this.props.timetable)
-//      this.props.activeScheduler(timetable)
-//
-//    })
-//
-//
-//
-//
-// let endTimes = getEndTimes(this.props.timetable);
-//
-//  endTimes.map((endTime)=>{
-//    this.props.innactiveScheduler(endTime);
-//  })
-//
-//      });
+
+     this.props.setSocket(socket);
+       this.props.setAdverts();
+  this.props.getRooms();
+
+     this.props.setTimetable(()=>{
+
+
+ if(this.props.timetable.length<1){
+   console.log('hi')
+  return
+
+
+}
+   this.props.timetable.map((timetable)=>{
+
+   console.log(this.props.timetable)
+     this.props.activeScheduler(timetable)
+
+   })
+
+
+
+let endTimes = getEndTimes(this.props.timetable);
+
+ endTimes.map((endTime)=>{
+   this.props.innactiveScheduler(endTime);
+ })
+
+     });
+
+
+
+
+     // this.props.socket.on('rooms',(data)=>{
+     //
+     //   console.log("lol",data);
+     //
+     //
+     // })
 
 
 }
@@ -154,7 +173,7 @@ student.tableDisplayed = true;
 }
 enableDisplayTableButton =()=>{
 
-     console.log(this.state)
+
   let student = this.state.student
 student.tableDisplayed = false;
 
@@ -236,7 +255,7 @@ student.tableDisplayed = false;
         return (<Upload/>)
 
    }}/>
-   
+
 
    <Route path = '/student/quickview' render = {()=>{
 
@@ -247,6 +266,12 @@ student.tableDisplayed = false;
    <Route path = '/staff/timetableUploader' render = {()=>{
 
         return (<TimetableUploader />)
+
+   }}/>
+
+   <Route path = '/student/viewb' render = {()=>{
+
+        return (<Viewb />)
 
    }}/>
 

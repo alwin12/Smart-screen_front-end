@@ -23,7 +23,10 @@ export const activeScheduler = (timetable)=>(dispatch) => {
      dispatch({type:"SET_ALL_INNACTIVE"});
 
      dispatch({type:"SET_TO_ACTIVE",payload:timetable})
-     dispatch({type:"SET_TO_NEXT",payload:timetable})
+
+
+
+     //dispatch({type:"SET_TO_NEXT",payload:timetable})
 
 
  },  ()=> {
@@ -42,12 +45,12 @@ return job;
      dispatch({type:"SCHEDULE_JOB_PENDING"})
 
       let hrAndMin = splitHrAndMin(endTime);
-      console.log(hrAndMin)
+    
 
      let job = new CronJob(`${hrAndMin.min} ${hrAndMin.hr} * * 1-6 `, ()=>{
 
 
-       console.log('cron job called')
+
         dispatch({type:"SET_ALL_INNACTIVE"})
 
 

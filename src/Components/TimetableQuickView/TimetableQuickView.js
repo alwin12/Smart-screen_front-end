@@ -35,9 +35,9 @@ console.log(this.props.timetable)
 
        const t =   setTimeout(()=>{
 
-           //this.props.history.push('/student/adverts')
+           this.props.history.push('/student/viewb')
 
-         },20000)
+         },5000)
        }
 
 
@@ -100,7 +100,7 @@ this.setState({time:t,amPm:amPm})
     <ParentDiv style={{backgroundImage: `url(${Background})`}}>
 
    <TopSection>
-    <div className='roomno'>room</div>
+    <div className='roomno'>{this.props.room}</div>
       <div className="currenttime">{this.state.time} {this.state.amPm}</div>
     </TopSection>
 
@@ -207,9 +207,10 @@ const mapStateToProps = (state)=>{
 
   return {
 
-   timetable:state.socketIO.timetable
+   timetable:state.socketIO.timetable,
+   room:state.inputFields.roomField
 
 
   }
 }
-export default connect(mapStateToProps,null)(requireConfigAuth(withRouter(TimetableQuickView)))
+export default connect(mapStateToProps,null)(withRouter(TimetableQuickView))

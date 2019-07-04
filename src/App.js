@@ -28,6 +28,7 @@ import {setSocket,setTimetable,modifyTimetable,setAdverts,getRooms} from './redu
 //const io = require('socket.io-client');
 
 import io from 'socket.io-client'
+import 'semantic-ui-css/semantic.min.css'
 
  let socket = io.connect('http://localhost:3001/');
 

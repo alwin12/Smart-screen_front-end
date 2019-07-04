@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import Swiper from 'react-id-swiper';
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import './Adverts.css'
 
 
@@ -17,6 +18,12 @@ const mapStateToProps = (state)=>{
 class Adverts extends Component {
 
   componentDidMount(){
+
+    this. interval = setTimeout(()=>{
+
+ this.props.history.push('/student/quickview')
+
+    },5000)
 
 this.props.enableDisplayTableButton();
 
@@ -66,4 +73,4 @@ const params = {
 }
 
 
-export default connect(mapStateToProps,null)(Adverts)
+export default connect(mapStateToProps,null)(withRouter(Adverts))

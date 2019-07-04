@@ -1,32 +1,45 @@
 import styled from 'styled-components'
 
 
-export const Container = styled.div`
+
+export const ParentDiv=styled.div`
+
+
+
 
 
 display:grid;
+  grid-template-columns: 100px 1fr 100px;
+  grid-template-rows: 100px 600px 100px 1fr 50px;
+  grid-template-areas: ". nav ." ". upload ." ". progress ." ". images ." ". . .";
+    background-color:white
+`
 
-grid-template-rows: 400px auto;
+export const UploadDiv = styled.div`
 
-grid-template-columns: 150px 1fr 150px ;
 
-grid-template-areas:
+display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr 80% 1fr;
+  grid-template-areas: ". . ." ". segment ." ". . .";
+    grid-area:upload;
 
-"icons previewImage previewImage"
-". images .";
 
-grid-row-gap:30px;
+
 
 `
 
+
+
 export const Icons = styled.div`
 
-  grid-area:icons;
+   grid-area:button;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
+  justify-content:center;
      align-items:center;
-     margin-top:10px
+
+
 
 `
 
@@ -38,17 +51,16 @@ export const Images = styled.div`
 grid-area:images;
 justify-self:center;
 align-self: center;
-border:2px solid black;
+
 display:flex;
-flex-direction:row;
-flex-wrap:wrap;
-overflow:scroll;
-height:700px;
+flex-direction:column;
+height:400px;
+width:800px;
 flex-gap:10px;
 justify-content:space-between;
 align-content:space-between;
 
-::-webkit-scrollbar-track{
+/*::-webkit-scrollbar-track{
 
   background-color:black;
 }
@@ -65,7 +77,7 @@ align-content:space-between;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: blue;
   border-radius:30px;
-}
+}*/
 
 
 `
@@ -132,7 +144,7 @@ opacity:0.3;
 
 }
 
-
+height:'300px'
 
 
 `

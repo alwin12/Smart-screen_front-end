@@ -3,7 +3,28 @@
 import styled from 'styled-components'
 
 
-export const Container = styled.div`
+
+export const ParentDiv = styled.div`
+
+background-repeat:no-repeat;
+background-size:100% 100%;
+
+display: grid;
+ grid-template-columns: 100px 1fr 100px;
+ grid-template-rows: 150px 1fr 1fr 50px;
+ grid-template-areas: ". nav ." ". upload ." ". progress ." ". . .";
+
+
+
+
+
+
+
+
+`
+
+
+export const UploadDiv = styled.div`
 
 
       display:flex;
@@ -11,11 +32,14 @@ export const Container = styled.div`
       margin:30px;
       text-align:center;
       align-items:center;
-
-
+      grid-area:upload;
 
 
 `
+
+
+
+
 
 export const Prog = styled.div`
 
@@ -26,6 +50,7 @@ flex-direction:column;
 justify-content:space-around;
 
 height: 300px;
+grid-area:progress;
 
 
 

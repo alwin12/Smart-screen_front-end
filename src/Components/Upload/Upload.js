@@ -7,12 +7,23 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import {link} from 'react-router-dom'
 
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import {Button as Btn} from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import {history,Link} from 'react-router-dom'
+
+import { Button as Btn2, Header, Icon, Segment, Label,LabelGroup,Container} from 'semantic-ui-react'
 import requireAuth from '../../utils/requireAuth'
 
 import {setImageField,uploadAdvert,setAdverts} from '../../redux/actions.js'
 import './Upload.css'
 
-import {Container,Icons,Images,Img,ImageWrapper,Middle,Button,Middle2} from './style.js'
+import {UploadDiv,ParentDiv,Icons,Images,Img,ImageWrapper,Middle,Button,Middle2} from './style.js'
+import ProgressBar from "../ProgressBar/ProgressBar"
 
 
 
@@ -22,7 +33,10 @@ return {
 
    adverts:state.socketIO.adverts,
    image:state.inputFields.image,
-   previewImage:state.inputFields.previewImage
+   previewImage:state.inputFields.previewImage,
+   uploadFailed: state.uploadAPI.uploadFailed,
+   uploadSuccess:state.uploadAPI.uploadSuccess,
+   uploadPending:state.uploadAPI.uploadPending
 }
 
 }
@@ -39,6 +53,7 @@ const mapDispatchToProps = (dispatch)=>{
 
 
 
+
  }
 
 
@@ -48,6 +63,11 @@ const mapDispatchToProps = (dispatch)=>{
 
 class Adverts extends Component {
 
+  state = {
+    uploadPerc:0,
+    uplaod: false
+  }
+
 
 
 componentDidMount(){
@@ -56,7 +76,10 @@ componentDidMount(){
 
 axios.post('http://localhost:3002/staff/images',{
   token: sessionStorage.getItem('token')
-}).then(images=>this.setState({imagesArray:images.data.resources}))
+}).then(images=>this.setState({
+  imagesArray:images.data.resources}
+
+))
 
 }
 onChange = (e)=>{
@@ -71,27 +94,27 @@ componentDidMount(){
 
   //this.props.setAdverts();
 }
-onClick = () =>{
-//   console.log('onclick')
-//   const formData = new FormData();
-//   formData.append('image',this.state.image)
-//   formData.append('token',sessionStorage.getItem('token'))
-//   const config = {
-//     headers: {
-//       'content-type': 'multipart/form-data',
-//       'x-auth': sessionStorage.getItem('token')
-//     }
-//   }
-//   axios.post('http://localhost:3002/staff/upload',formData,config).then((images)=>{
-//
-//
-//   console.log(images.data.resources)
-//   this.setState({imagesArray:images.data.resources})
-//
-// }).catch (e=>{
-//   console.log('error',e)
-// })
 
+
+updatePerc = ()=>{
+
+
+
+
+  setInterval(()=>{
+
+       if(this.props.uploadSuccess)
+   {
+  this.setState({uploadPerc:0})
+  return;
+   }
+  if(this.state.uploadPerc <90){
+
+
+    this.setState({uploadPerc:this.state.uploadPerc+=5})
+  }
+
+},2000)
 
 
 }
@@ -99,14 +122,19 @@ onClick = () =>{
   render(){
 
 
+
+
+
+
    const images = this.props.adverts.map((image)=>{return (
 
+     <Segment>
      <ImageWrapper>
-     <Img src ={image.secure_url} height='300' width ='350'/>
+     <Img src ={image.secure_url} height='300' width ='300'/>
      <Middle>
 
 
-       <Button>view Image</Button>
+       <Btn2>view Image</Btn2>
 
 
 
@@ -115,45 +143,99 @@ onClick = () =>{
      <FontAwesomeIcon icon = {faTrash} color='red' size='2x' className='select'  />
      </Middle2>
      </ImageWrapper>
-
+  </Segment>
 
 
 
    )})
     return(
 
-      <Container>
 
-       <Icons >
+     <ParentDiv >
+
+     <div  style={{gridArea:"nav"}} >
+   <AppBar >
+       <Toolbar>
+         <IconButton edge="start"  color="inherit" aria-label="Menu">
+           <MenuIcon />
+         </IconButton>
+         <Typography variant="h6" >
+
+         </Typography>
+
+         <Link to ="/staff/timetableUploader" className="nostyle"><Btn color="inherit"> Timetable</Btn></Link>
+       <Link to ="/staff/upload" className="nostyle">  <Btn color="inherit" >Adverts</Btn></Link>
+         <Link to="/staff/login" className="nostyle"><Btn color="inherit" >Logout</Btn></Link>
+
+       </Toolbar>
+     </AppBar>
+     </div>
+
+      <UploadDiv>
+
+
+      <Segment style={{height:'100%',width:'100%',gridArea:'segment'}} placeholder>
+
+
+  <Icons>
+
       <label htmlFor ='single'>
     <FontAwesomeIcon icon = {faImage} color='black' size='5x' className='select' />
     </label>
 
    <input type ='file' id ='single' onChange = {(e)=>{this.props.setImageField(e)}}/>
 
+  <Btn primary style={{background:'#3F51B5'}} onClick = {()=>{
+     this.updatePerc()
+
+this.props.uploadAdvert();
+}} >Upload</Btn>
+</Icons >
 
 
-  <FontAwesomeIcon icon = {faUpload} className='upload' onClick = {()=>{
-      this.props.uploadAdvert();
+
+  {this.props.previewImage?(
+
+    <img style={{gridArea:"preview",margin:"20px", }}
+    src={this.props.previewImage} height='300px' width='600px' />
+
+
+  ):<div></div>
+
+
+
+
   }
 
-} color='black' size='3x' />
-</Icons>
+</Segment>
 
-
-
-<div style={{gridArea:"previewImage",margin:"20px"}}><img src={this.props.previewImage} height='400' width='1000' /></div>
-
+  </UploadDiv>
 
 
 
 
+  <div style={{gridArea:'progress'  ,textAlign:'center',margin: '0 auto'}}>
 
 
- <Images style={{gridArea:'images'}}>{images}</Images>
+  {
+  this.props.uploadPending &&(  <ProgressBar perc= {this.state.uploadPerc} text = {'uploading...'}/>)
+  }
 
-      </Container>
 
+  {
+  this.props.uploadSuccess &&(  <LabelGroup size='huge'><Label>Success! </Label></LabelGroup>)
+  }
+
+
+  </div>
+
+
+
+
+ <Images >{images}</Images>
+
+
+ </ParentDiv>
     )
   }
 }

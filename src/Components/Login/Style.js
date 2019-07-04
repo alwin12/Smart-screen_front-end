@@ -14,7 +14,8 @@ import styled from 'styled-components'
 // }
 export const Container = styled.div`
 
-
+background-repeat:no-repeat;
+background-size:100% 100%;
 
    width: 300px;
    height:600px;
@@ -29,6 +30,18 @@ export const Container = styled.div`
 
 
 
+
+
+
+`
+
+
+
+export const Div = styled.div`
+background-repeat:no-repeat;
+background-size:100% 100%;
+
+height:100vh;
 
 
 `

@@ -6,7 +6,29 @@ import { faUpload,faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import excelToJson from 'convert-excel-to-json'
 import { Button, Header, Icon, Segment, Label,LabelGroup} from 'semantic-ui-react'
 import ProgressBar from "../ProgressBar/ProgressBar"
-import {Container,Prog} from './style.js'
+import {UploadDiv,Prog,ParentDiv} from './style.js'
+import staffBack from '../staffBack.jpg'
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import {Button as Btn} from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import {history,Link} from 'react-router-dom'
+import './style.css'
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   menuButton: {
+//     marginRight: theme.spacing(2),
+//   },
+//   title: {
+//     flexGrow: 1,
+//   },
+// }));
+
 
 
 class AddTimetable extends Component{
@@ -113,11 +135,30 @@ handleUpload = (e)=>{
 
       this.updatePerc();
 
+      //const classes = useStyles();
+
   const {uploadingPerc,parsingPerc,dbPerc} = this.state
 
      return(
+  <ParentDiv style={{backgroundImage: `url(${staffBack})`}}>
+    <div  style={{gridArea:"nav"}} >
+  <AppBar >
+      <Toolbar>
+        <IconButton edge="start"  color="inherit" aria-label="Menu">
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" >
 
-    <Container style={{}}>
+        </Typography>
+
+        <Link to ="/staff/timetableUploader" className="nostyle"><Btn color="inherit"> Timetable</Btn></Link>
+      <Link to ="/staff/upload" className="nostyle">  <Btn color="inherit" >Adverts</Btn></Link>
+        <Link to="/staff/login" className="nostyle"><Btn color="inherit" >Logout</Btn></Link>
+
+      </Toolbar>
+    </AppBar>
+    </div>
+    <UploadDiv style={{}}>
        <Segment placeholder>
            <Header icon style={{background:'none'}}>
 
@@ -140,8 +181,6 @@ handleUpload = (e)=>{
             this.handleUpload(e)
 
 
-
-
           }}/>
           <Button primary onClick = {this.submitFile} >Upload</Button>
 
@@ -156,17 +195,11 @@ handleUpload = (e)=>{
 
      {this.state.uploadSuccess &&<LabelGroup size='huge'><Label>Success! </Label></LabelGroup> }
 
- </Container>
+ </UploadDiv>
 
-
-
-
-
+ </ParentDiv>
 
      )
-
-
-
 
 
      }
@@ -174,7 +207,7 @@ handleUpload = (e)=>{
   }
 
 
-export default AddTimetable
+export default (AddTimetable)
 
 {/*<label htmlFor ='single'>
 <FontAwesomeIcon icon = {faImage} color='black' size='5x' className='select' />

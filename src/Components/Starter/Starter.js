@@ -14,11 +14,11 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
+import {ParentDiv} from './style.js'
 import {setSocket,setTimetable,modifyTimetable,setAdverts} from '../../redux/actions.js'
 import {activeScheduler,innactiveScheduler} from "../../time-scheduler/timeScheduler"
 import {sort,getEndTimes,authentication} from '../../utils/utils.js'
-
+import logo from './logo.svg'
 import io from 'socket.io-client'
 
 const styles = theme => ({
@@ -26,6 +26,10 @@ const styles = theme => ({
     margin: '40px',
   },
 });
+
+let errorStyle= {
+  background:"red"
+}
 
 
 class Starter extends Component {
@@ -35,7 +39,10 @@ class Starter extends Component {
    building:'',
    lectureHall:'',
    authenticated:false,
-   staffPortal:false
+   staffPortal:false,
+   pinError:false,
+   roomError:false,
+
 
  }
 
@@ -70,6 +77,8 @@ class Starter extends Component {
 
       callback()
     }).catch(e=>{
+
+      this.setState({pinError:true})
 
     })
 
@@ -178,9 +187,12 @@ render(){
 
   return(
 
-    <div style={{background:`url(${Background})` ,height:'100vh'}}>
+    <ParentDiv style={{background:`url(${Background})`}}>
 
-    <Container style={{margin: "0 auto",}}>
+
+     <img src ={logo} style={{gridArea:'logo'}}/>
+
+    <Container style={{gridArea:'login'}}>
 
          <Dropdown
 
@@ -188,20 +200,47 @@ render(){
          fluid
          selection
          options={this.getDropDownOptions(this.props.rooms)}
+          style={this.state.roomError?errorStyle:{}}
 
          onChange = {(e,{name,value})=>{
+
+           this.setState({roomError:false})
 
         this.props.setRoomField(value)
 
 
       }}/>
 
-     <TextField style={{marginTop:'20px'}} type='password'  id="input-with-icon-grid" label="pin" onChange = {this.props.setPinField} />
+     <TextField style={{marginTop:'20px'}} type='password' error={this.state.pinError} id="input-with-icon-grid" label="pin" onChange =
+     {(e)=>{
+
+  this.setState({pinError:false})
+   this.props.setPinField(e)
+
+     }
+
+
+
+     } />
 
 
 <Button  style={{alignSelf:'center',margin:'4px',marginTop:"50px"}} onClick = {()=>{
 
 this.onGoClick(()=>{
+
+   if(this.props.room==""){
+     this.setState({roomError:true})
+   }
+
+
+  if(this.state.roomError || this.state.pinError) {
+
+
+
+     return
+  }
+
+
 
     this.props.history.push('/student/adverts')
 
@@ -217,7 +256,7 @@ this.onGoClick(()=>{
 
   </Container>
 
-  </div>
+  </ParentDiv>
 
 
 

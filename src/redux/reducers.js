@@ -62,7 +62,9 @@ const initialuploadAPIState = {
 
   adverts:[],
   uploadPending: false,
-  errorMessage:''
+  errorMessage:'',
+  uploadFailed:false,
+  uploadSuccess:false
 
 
 
@@ -133,8 +135,19 @@ past: false,
 let sortedTimetable = sort(modifiedTimetable)
 
 
+  let date = new Date()
 
-  sortedTimetable[0].status.next = true
+
+   //if(date.getHours() > sortedTimetable[0].startTime.substring(0,2)){
+
+     //console.log("time",date.getHours())
+     console.log('time2',sortedTimetable[0].startTime.substring(0,2))
+
+       sortedTimetable[0].status.next = true
+ //}
+
+
+
 
 
 console.log("sorted",sortedTimetable)
@@ -202,7 +215,7 @@ let timetable = state.timetable.map((timetable,index)=>{
 
 
           })
-timetable[i].status = {past:false,now:true,next:false,previous:false}
+      timetable[i].status = {past:false,now:true,next:false,previous:false}
 
       if(i ==timetable.length-1){
 
@@ -292,7 +305,7 @@ case SET_IMAGE_FIELD:
 
  case SET_PREVIEW_IMAGE:
 
-console.log('prviewq image',action.payload)
+
  return {...state,previewImage:action.payload}
 
  case REMOVE_PREVIEW_IMAGE:
@@ -352,15 +365,15 @@ export const uploadAPI = (state=initialuploadAPIState,action={})=>{
 
    case UPLOAD_PENDING:
 
-   return {...state,uploadPending:true}
+   return {...state,uploadPending:true,uploadSuccess:false,uploadFailed:false}
 
    case UPLOAD_SUCCESS:
 
-   return {...state,uploadPending:false}
+   return {...state,uploadPending:false,uploadSuccess:true}
 
    case UPLOAD_FAILED:
 
-   return {...state,uploadPending:false,errorMessage:action.payload.toString()}
+   return {...state,uploadPending:false,errorMessage:action.payload.toString(),uploadFailed:true}
 
 
 default: return state

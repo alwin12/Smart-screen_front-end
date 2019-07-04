@@ -104,11 +104,8 @@ export const setTimetable = (callback) =>(dispatch,getState)=>{
 
 
 
-
-
-
       dispatch({type:RECIEVE_TIMETABLE_SUCCESS,payload:timetable})
-      
+
           callback();
 
 
@@ -206,6 +203,7 @@ export const uploadAdvert = () => (dispatch,getState) => {
   console.log('upload data',data)
 
     dispatch({type:UPLOAD_SUCCESS})
+
     dispatch({type:REMOVE_PREVIEW_IMAGE})
 
 

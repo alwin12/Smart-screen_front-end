@@ -4,9 +4,9 @@ const JSON = require('circular-json');
 
 export const saveToLocalStorage = (state)=>{
 
-console.log('local',state)
+
   try{
-    console.log(state);
+    
 
     const serialisedState = JSON.stringify(state);
 

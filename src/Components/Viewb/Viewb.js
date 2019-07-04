@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import './Viewb.css'
 import Background from './background.jpeg'
 import {ParentDiv,ContentDiv,TopSection,Flex,Notb} from './style.js'
+import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 class Viewb extends Component {
@@ -18,12 +19,20 @@ class Viewb extends Component {
   componentDidMount(){
 
 
+            setTimeout(()=>{
+
+
+              this.props.history.push('/student/adverts')
+
+            },5000)
+
+
 
     this.loadInterval = setInterval(this.getTime,1000)
 
     const t =   setTimeout(()=>{
 
-        //this.props.history.push('/student/adverts')
+        this.props.history.push('/student/adverts')
 
       },20000)
     }
@@ -65,30 +74,63 @@ this.setState({time:t,amPm:amPm})
     let next={}
     let later = {}
 
-
+    let notb = true
 
     this.props.timetable.map((timetable)=>{
 
       if(timetable.status.now ===true){
-
+        notb = false
         now = timetable;
       }
       if(timetable.status.next ===true){
-
+      notb = false
         next = timetable;
       }
       if(timetable.status.past ===true){
-
+       notb = false
         past = timetable;
       }
       if(timetable.status.later ===true){
-
+      notb = false
         later = timetable;
       }
 
 
 
     })
+
+
+if(notb){
+  return(
+      <ParentDiv style={{backgroundImage: `url(${Background})`}} >
+
+      <TopSection>
+
+        <div className="room">{this.props.room}</div><div className="time">{this.state.time} {this.state.amPm}</div>
+
+
+
+      </TopSection>
+
+      <ContentDiv>
+
+            <Flex className="name" style={{textAlign:"center",fontSize:'60px',
+          }}>No Scheduled Timetable</Flex>
+
+
+
+
+
+
+
+      </ContentDiv>
+
+      </ParentDiv>
+
+  )
+}
+
+
 
     return(
 
@@ -97,7 +139,7 @@ this.setState({time:t,amPm:amPm})
 
 <TopSection>
 
-  <div className="room">room</div><div className="time">{this.state.time} {this.state.amPm}</div>
+  <div className="room">{this.props.room}</div><div className="time">{this.state.time} {this.state.amPm}</div>
 
 
 </TopSection>
@@ -151,7 +193,7 @@ this.setState({time:t,amPm:amPm})
          <div className='dash'>-</div>
          <div className='coursename'>{next.name}</div>
          <div className='name'>{next.staffs}</div>
-          </Flex>): (<Flex><div>Next></div><div className="name">no next timetable</div></Flex>)}
+          </Flex>): (<Notb><div></div><div className="name">no next timetable</div></Notb>)}
 
           {later.startTime? (
                <Flex>
@@ -193,11 +235,12 @@ const mapStateToProps = (state)=>{
 return {
 
 
-   timetable:state.socketIO.timetable
+   timetable:state.socketIO.timetable,
+   room:state.inputFields.roomField
 }
 
 
 }
 
 
-export default connect(mapStateToProps,null)(Viewb)
+export default connect(mapStateToProps,null)(withRouter(Viewb))

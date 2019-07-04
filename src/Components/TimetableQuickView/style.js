@@ -4,8 +4,7 @@ import styled from 'styled-components'
 
 export const ParentDiv = styled.div`
 
-background-repeat:no-repeat;
-background-size:100% 100%;
+
   height:100vh;
 
   display: grid;

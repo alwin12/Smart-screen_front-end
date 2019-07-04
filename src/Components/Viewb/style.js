@@ -47,7 +47,7 @@ grid-area:contentSection;
 
   display:flex;
   justify-content:space-between;
-  border-bottom: 5px solid black
+  border-bottom: 2px solid #567EBC
   align-items:center;
 
 
@@ -61,7 +61,7 @@ export const Notb = styled.div`
   display:flex;
 align-items:center;
 justify-content:center;
-border-bottom: 5px solid black
+border-bottom: 2px solid #567EBC
 
 
 

@@ -4,9 +4,9 @@ import * as EmailValidator from 'email-validator';
 import {Redirect,Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
+import staffBack from '../staffBack.jpg'
 
-
-import {Container} from '../../Style.js'
+import {Container,Div} from '../../Style.js'
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -84,8 +84,8 @@ render(){
 
 return (
 
-
-<Container>
+<Div style={{backgroundImage: `url(${staffBack})`}}>
+<Container >
 
          <div className={classes.margin}>
         <Grid container spacing={8} alignItems="flex-end">
@@ -148,6 +148,8 @@ return (
 
 
 </Container>
+
+</Div>
 
 
 )
